@@ -2,6 +2,7 @@
 
 :root {
   --yellow: #ffd15b;
+  --gray: #7a7a7a;
 }
 
 header {
@@ -11,29 +12,19 @@ header {
   background-repeat: no-repeat;
   background-size: cover;
   background-position: center;
-  padding: 25px;
 }
 
 header div {
   height: 100%;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
 }
 
 header div h2 {
   color: var(--yellow);
-  font-size: 42px;
-  display: flex;
-  flex-direction: column;
   font-family: "Anton", sans-serif;
-  margin-bottom: 29px;
-  text-align: center;
 }
 
 header div label {
-  width: 50%;
+  width: 70%;
 }
 
 header div label {
@@ -44,7 +35,7 @@ header div label img {
   content: "";
   position: absolute;
   right: 10px;
-  top: 7px;
+  top: 10px;
   background-image: url("./assets/logo/iconSearch.svg");
   background-color: black;
   border-radius: 11px;
@@ -55,9 +46,8 @@ header div label img {
 }
 
 header div input {
+  color: var(--gray);
   width: 100%;
-  border-radius: 11px;
-  padding: 20px;
   border: none;
   outline: none;
 }

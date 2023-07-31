@@ -14,24 +14,25 @@
     <title>Les petits plats</title>
   </head>
   <body>
-    <header>
+    <header class="p-4">
       <h1>
         <img src="./assets/logo/logo.svg" alt="logo" />
         <img src="./assets/logo/icon.svg" alt="icon" />
       </h1>
-      <div>
-        <h2>
+      <div class="d-flex flex-column justify-content-center align-items-center">
+        <h2 class="d-flex flex-column mb-4 fs-1 text-center">
           <span>CHERCHEZ PARMI PLUS DE 1500 RECETTES</span>
           <span>DU QUOTIDIEN,SIMPLES ET DÉLICIEUSES</span>
         </h2>
         <label for="filter">
           <input
+            class="p-4 rounded-3"
             type="text"
             placeholder="Rechercher une recette, un ingrédient, ..."
             name="filter"
             id="filter"
           />
-          <img src="/assets/logo/iconSearch.svg" alt="" />
+          <img src="/assets/logo/iconSearch.svg" alt="icon search" />
         </label>
       </div>
     </header>
