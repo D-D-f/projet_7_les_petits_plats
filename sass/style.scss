@@ -1,5 +1,7 @@
 @import "./base/reset";
+@import "./abstracts/colors";
+@import "./abstracts/typography";
+@import "./components/input";
 @import "./layout/header";
-@import "./abstracts/variables";
 @import "./pages/index";
 @import "../node_modules/bootstrap/scss/bootstrap.scss";

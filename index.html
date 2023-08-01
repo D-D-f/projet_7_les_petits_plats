@@ -23,16 +23,28 @@
     <title>Les petits plats</title>
   </head>
   <body>
-    <header class="h-75 w-100">
-      <h1 class="p-4">
+    <header class="h-75 w-100 d-flex flex-column">
+      <h1 class="p-5">
         <img src="./assets/logo/logo.svg" alt="logo" />
         <img src="./assets/logo/icon.svg" alt="icon" />
       </h1>
-      <div class="container">
-        <h2 class="d-flex flex-column align-items-center text-primary">
+      <div class="h-100 d-flex flex-column justify-content-center">
+        <h2 class="d-flex flex-column align-items-center text-primary mb-4">
           <span>CHERCHEZ PARMI PLUS DE 1500 RECETTES </span>
           <span>DU QUOTIDIEN,SIMPLES ET DÉLICIEUSES</span>
         </h2>
+        <form class="d-flex flex-column align-items-center">
+          <label for="filter">
+            <input
+              class="p-4 rounded-3 fs-6"
+              type="search"
+              placeholder="Rechercher une recette, un ingrédient, ..."
+              name="filter"
+              id="filter"
+            />
+            <img src="/assets/logo/iconSearch.svg" alt="icon search" />
+          </label>
+        </form>
       </div>
     </header>
   </body>
