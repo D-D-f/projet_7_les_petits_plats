@@ -22,7 +22,7 @@
     <title>Les petits plats</title>
   </head>
   <body>
-    <header class="w-100 d-flex flex-column">
+    <header class="header w-100 d-flex flex-column">
       <h1 class="p-5">
         <img src="./assets/logo/logo.svg" alt="logo" />
         <img src="./assets/logo/icon.svg" alt="icon" />
@@ -37,7 +37,7 @@
         <form class="d-flex flex-column align-items-center">
           <label for="filter">
             <input
-              class="p-4 rounded-3 fs-6"
+              class="input_header p-4 rounded-3 fs-6"
               type="search"
               placeholder="Rechercher une recette, un ingrédient, ..."
               name="filter"
@@ -49,14 +49,19 @@
       </div>
     </header>
     <section class="bg-body-tertiary">
-      <ul id="select">
-        <div class="select">
-          ingrédients <span><i class="fa-solid fa-chevron-down"></i></span>
+      <div class="menu">
+        <span class="allspan">
+          <span>ingrédients</span>
+          <span id="span" class="chevron"
+            ><i class="fa-solid fa-chevron-down"></i
+          ></span>
+        </span>
+        <div class="input">
+          <input class="input_select" type="search" name="search" id="search" />
         </div>
-        <li>VALUE</li>
-        <li>VALUE 2</li>
-        <li>VALUE 3</li>
-      </ul>
+
+        <ul></ul>
+      </div>
     </section>
     <script src="index.js"></script>
   </body>

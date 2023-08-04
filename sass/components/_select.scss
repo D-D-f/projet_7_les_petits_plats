@@ -1,9 +1,101 @@
-.select {
+.menu {
+  width: 181px;
+  height: 40px;
+  line-height: 20px;
   background-color: white;
-  width: 179px;
-  height: 56px;
+  color: black;
   padding: 17px;
+  transition: all 0.3s ease-out;
   border-radius: 11px;
+  position: relative;
+  cursor: pointer;
+
+  .allspan {
+    display: flex;
+    justify-content: space-between;
+    position: absolute;
+    top: 12px;
+
+    .chevron {
+      position: absolute;
+      right: -70px;
+    }
+  }
+}
+
+.input {
+  margin-top: 30px;
+}
+
+ul {
   display: flex;
-  justify-content: space-between;
+  flex-direction: column;
+  align-items: center;
+  margin-top: 10px;
+  padding: 0;
+  list-style: none;
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height 0.1s ease-out, padding 0.1s ease;
+}
+
+.input_select {
+  display: none;
+  width: 100%;
+}
+
+.input_on input {
+  display: block;
+  margin: auto;
+  outline: none;
+}
+
+.ul_on {
+  max-height: 110px;
+  padding: 10px 0;
+  overflow: auto;
+
+  .input_select {
+    margin-bottom: 10px;
+    outline: none;
+  }
+
+  li {
+    display: block;
+    padding-right: 10px;
+  }
+}
+
+ul::-webkit-scrollbar {
+  width: 8px;
+}
+
+ul::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+ul::-webkit-scrollbar-thumb {
+  background-color: #888;
+  border-radius: 4px;
+}
+
+ul {
+  scrollbar-width: none;
+}
+
+ul::-webkit-scrollbar {
+  display: none;
+}
+
+.height {
+  height: 180px;
+}
+
+span i {
+  transform: rotate(0);
+  transition: transform 0.1s ease-in-out;
+}
+
+.chevronDown i {
+  transform: rotate(180deg);
 }

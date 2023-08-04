@@ -1,4 +1,4 @@
-header form {
+.header form {
   width: 100%;
 
   label {
@@ -19,7 +19,7 @@ header form {
       cursor: pointer;
     }
 
-    input {
+    .input_header {
       color: var(--gray);
       width: 100%;
       border: none;
