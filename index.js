@@ -22,32 +22,87 @@ const filterAllIngredients = (recettes) => {
         allIngredients.push(ingredient.ingredient.toLowerCase())
     );
   });
+  return allIngredients;
 };
 
-const selectSearch = () => {
-  const chevron = document.querySelector("#span");
-  const div = document.querySelector(".menu");
-  const ul = document.querySelector("ul");
-  const input = document.querySelector(".input");
+const allAppliance = (recettes) => {
+  let allAppliances = [];
+  recettes.forEach((appliance) => {
+    if (!allAppliances.includes(appliance.appliance)) {
+      allAppliances.push(appliance.appliance);
+    }
+  });
 
-  chevron.addEventListener("click", () => {
-    if (chevron.classList.contains("chevronDown")) {
-      chevron.classList.remove("chevronDown");
+  return allAppliances;
+};
+
+const filterAllUstensils = (recettes) => {
+  let allUstensils = [];
+  recettes.forEach((recette) => {
+    recette.ustensils.filter(
+      (ustensil) =>
+        allUstensils.includes(ustensil.toLowerCase()) !== true &&
+        allUstensils.push(ustensil.toLowerCase())
+    );
+  });
+  return allUstensils;
+};
+
+const searchBar = (nameOfList, name) => {
+  const section = document.querySelector(".allMenu");
+  const menu = document.createElement("div");
+  menu.classList.add("menu");
+  const spanContainer = document.createElement("span");
+  spanContainer.classList.add("allspan");
+  const spanName = document.createElement("span");
+  spanName.innerText = nameOfList;
+  const spanChevron = document.createElement("span");
+  spanChevron.id = "span";
+  spanChevron.classList.add("chevron");
+  spanContainer.append(spanName, spanChevron);
+  spanChevron.innerHTML = "<i class='fa-solid fa-chevron-down'></i>";
+  const divInput = document.createElement("div");
+  divInput.classList.add("input");
+  const input = document.createElement("input");
+  divInput.appendChild(input);
+  input.classList.add("input_select");
+  input.setAttribute("type", "search");
+  const ul = document.createElement("ul");
+
+  name.forEach((name) => {
+    const li = document.createElement("li");
+    li.innerText = name;
+    ul.append(li);
+  });
+  menu.append(spanContainer, divInput, ul);
+  section.appendChild(menu);
+
+  spanContainer.addEventListener("click", () => {
+    if (spanContainer.classList.contains("chevronDown")) {
+      spanContainer.classList.remove("chevronDown");
       ul.classList.remove("ul_on");
-      div.classList.remove("height");
-      input.classList.remove("input_on");
+      menu.classList.remove("height");
+      divInput.classList.remove("input_on");
     } else {
-      chevron.classList.add("chevronDown");
-      div.classList.add("height");
+      spanContainer.classList.add("chevronDown");
+      menu.classList.add("height");
       ul.classList.add("ul_on");
-      input.classList.add("input_on");
+      divInput.classList.add("input_on");
     }
   });
 };
 
+const displayList = (ingredient, appareil, ustensile) => {
+  searchBar("Ingrédients", ingredient);
+  searchBar("Appareils", appareil);
+  searchBar("Ustensiles", ustensile);
+};
+
 const init = async () => {
   const getRecettes = await getData();
-  filterAllIngredients(getRecettes);
-  selectSearch();
+  const ingredients = filterAllIngredients(getRecettes);
+  const appliances = allAppliance(getRecettes);
+  const ustensils = filterAllUstensils(getRecettes);
+  displayList(ingredients, appliances, ustensils);
 };
 init();
