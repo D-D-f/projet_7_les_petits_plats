@@ -71,7 +71,7 @@ const displayAllInfo = (array) => {
   filterAllUstensils(array);
 };
 
-const card = ({ name, image }) => {
+const card = ({ name, image, description }) => {
   const section = document.querySelector(
     ".section > .container > .allCard > .row"
   );
@@ -80,6 +80,8 @@ const card = ({ name, image }) => {
   const img = document.createElement("img");
   const divBody = document.createElement("div");
   const title = document.createElement("h3");
+  const h5 = document.createElement("h5");
+  const p = document.createElement("p");
   article.classList.add("col-4", "mb-4");
   article.append(divCard);
   divCard.classList.add("card", "p-0");
@@ -87,11 +89,14 @@ const card = ({ name, image }) => {
   divBody.classList.add("card-body");
   section.appendChild(article);
   divCard.append(img, divBody);
-  divBody.append(title);
+  divBody.append(title, h5, p);
   title.innerText = name;
   img.setAttribute("src", `assets/photos/${image}`);
   img.setAttribute("alt", name);
-  console.log(name, image);
+  img.classList.add("position-relative");
+  h5.innerText = "RECETTE";
+  p.innerText = description;
+
   return article;
 };
 
@@ -103,6 +108,7 @@ const init = async () => {
 
   getRecettes.forEach((recette) => {
     card(recette);
+    console.log(recette);
   });
 };
 init();
