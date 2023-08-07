@@ -49,95 +49,111 @@
       </div>
     </header>
     <section class="section bg-body-tertiary">
-      <div class="container">
-        <div class="row row-cols-3">
-          <div class="accordion col-3" id="accordionExample">
-            <div class="accordion-item">
-              <h2 class="accordion-header">
-                <button
-                  class="accordion-button"
-                  type="button"
-                  data-bs-toggle="collapse"
-                  data-bs-target="#collapseOne"
-                  aria-expanded="true"
-                  aria-controls="collapseOne"
+      <div class="container mb-4">
+        <div class="row row-cols-3" id="accordionExample">
+          <div class="col-2 position-relative z-1">
+            <div class="accordion position-absolute top-0 start-0 w-100">
+              <div class="accordion-item">
+                <h2 class="accordion-header">
+                  <button
+                    class="accordion-button collapsed"
+                    type="button"
+                    data-bs-toggle="collapse"
+                    data-bs-target="#collapseOne"
+                    aria-expanded="false"
+                    aria-controls="collapseOne"
+                  >
+                    Ingrédients
+                  </button>
+                </h2>
+                <div
+                  id="collapseOne"
+                  class="accordion-collapse collapse"
+                  data-bs-parent="#accordionExample"
                 >
-                  Ingrédients
-                </button>
-              </h2>
-              <div
-                id="collapseOne"
-                class="accordion-collapse collapse show custom-accordion-body"
-                data-bs-parent="#accordionExample"
-              >
-                <div class="accordion-body">
-                  <div>
-                    <input type="search" name="ingredients" id="ingredients" />
+                  <div class="accordion-body">
+                    <div class="input_search">
+                      <input
+                        type="search"
+                        name="ingredients"
+                        id="ingredients"
+                      />
+                    </div>
+                    <ul class="ingredient"></ul>
                   </div>
-                  <ul class="ingredient"></ul>
                 </div>
               </div>
             </div>
           </div>
-          <div class="accordion col-3" id="accordionExample">
-            <div class="accordion-item">
-              <h2 class="accordion-header">
-                <button
-                  class="accordion-button"
-                  type="button"
-                  data-bs-toggle="collapse"
-                  data-bs-target="#collapseTwo"
-                  aria-expanded="true"
-                  aria-controls="collapseTwo"
+          <div class="col-2 position-relative ms-4 z-1">
+            <div class="accordion position-absolute top-0 start-0 w-100">
+              <div class="accordion-item">
+                <h2 class="accordion-header">
+                  <button
+                    class="accordion-button collapsed"
+                    type="button"
+                    data-bs-toggle="collapse"
+                    data-bs-target="#collapseTwo"
+                    aria-expanded="false"
+                    aria-controls="collapseTwo"
+                  >
+                    Appareils
+                  </button>
+                </h2>
+                <div
+                  id="collapseTwo"
+                  class="accordion-collapse collapse"
+                  data-bs-parent="#accordionExample"
                 >
-                  Appareils
-                </button>
-              </h2>
-              <div
-                id="collapseTwo"
-                class="accordion-collapse collapse show custom-accordion-body"
-                data-bs-parent="#accordionExample"
-              >
-                <div class="accordion-body">
-                  <div>
-                    <input type="search" name="appliance" id="appliance" />
+                  <div class="accordion-body">
+                    <div class="input_search">
+                      <input type="search" name="appliance" id="appliance" />
+                    </div>
+                    <ul class="appliances"></ul>
                   </div>
-                  <ul class="appliances"></ul>
                 </div>
               </div>
             </div>
           </div>
-          <div class="accordion col-3" id="accordionExample">
-            <div class="accordion-item">
-              <h2 class="accordion-header">
-                <button
-                  class="accordion-button"
-                  type="button"
-                  data-bs-toggle="collapse"
-                  data-bs-target="#collapseThree"
-                  aria-expanded="true"
-                  aria-controls="collapseThree"
+          <div class="col-2 position-relative ms-4 z-1">
+            <div class="accordion position-absolute top-0 start-0 w-100">
+              <div class="accordion-item">
+                <h2 class="accordion-header">
+                  <button
+                    class="accordion-button collapsed"
+                    type="button"
+                    data-bs-toggle="collapse"
+                    data-bs-target="#collapseThree"
+                    aria-expanded="false"
+                    aria-controls="collapseThree"
+                  >
+                    Ustensiles
+                  </button>
+                </h2>
+                <div
+                  id="collapseThree"
+                  class="accordion-collapse collapse"
+                  data-bs-parent="#accordionExample"
                 >
-                  Ustensiles
-                </button>
-              </h2>
-              <div
-                id="collapseThree"
-                class="accordion-collapse collapse show custom-accordion-body"
-                data-bs-parent="#accordionExample"
-              >
-                <div class="accordion-body">
-                  <div>
-                    <input type="search" name="ustensile" id="ustensile" />
+                  <div class="accordion-body">
+                    <div class="input_search">
+                      <input type="search" name="ustensile" id="ustensile" />
+                    </div>
+                    <ul class="ustensiles"></ul>
                   </div>
-                  <ul class="ustensiles"></ul>
                 </div>
               </div>
             </div>
           </div>
         </div>
+      </div>
+    </section>
 
-        <div class="allCard"></div>
+    <section class="section bg-body-tertiary">
+      <div class="container mt-4 p-0">
+        <div class="allCard">
+          <div class="row row-cols-3"></div>
+        </div>
       </div>
     </section>
     <script

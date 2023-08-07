@@ -72,22 +72,27 @@ const displayAllInfo = (array) => {
 };
 
 const card = ({ name, image }) => {
-  const section = document.querySelector(".section > .container > .allCard");
+  const section = document.querySelector(
+    ".section > .container > .allCard > .row"
+  );
+  const article = document.createElement("article");
   const divCard = document.createElement("div");
   const img = document.createElement("img");
   const divBody = document.createElement("div");
   const title = document.createElement("h3");
-  divCard.classList.add("article");
-  img.classList.add("card-img-top");
+  article.classList.add("col-4", "mb-4");
+  article.append(divCard);
+  divCard.classList.add("card", "p-0");
+  img.classList.add("card-img-top", "h-50", "w-100");
   divBody.classList.add("card-body");
-  section.appendChild(divCard);
+  section.appendChild(article);
   divCard.append(img, divBody);
   divBody.append(title);
   title.innerText = name;
   img.setAttribute("src", `assets/photos/${image}`);
   img.setAttribute("alt", name);
   console.log(name, image);
-  return divCard;
+  return article;
 };
 
 const displayCard = () => {};
