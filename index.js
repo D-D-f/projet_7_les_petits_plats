@@ -149,7 +149,6 @@ const init = async () => {
 
   getRecettes.forEach((recette) => {
     card(recette);
-    console.log(recette);
   });
 };
 init();
