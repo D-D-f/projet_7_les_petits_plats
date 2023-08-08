@@ -1,0 +1,43 @@
+.container h5 {
+  font-family: $font-secondary;
+  color: #7a7a7a;
+  font-size: 12px;
+  letter-spacing: 2px;
+}
+
+.quantity,
+.ingredient {
+  font-size: 14px;
+  font-family: $font-secondary;
+}
+
+.quantity {
+  color: #7a7a7a;
+}
+
+.text-description {
+  height: 100px;
+  text-overflow: clip;
+  overflow: auto;
+}
+
+.text-description::-webkit-scrollbar {
+  width: 8px;
+}
+
+.text-description::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.text-description::-webkit-scrollbar-thumb {
+  background-color: #888;
+  border-radius: 4px;
+}
+
+.text-description {
+  scrollbar-width: none;
+}
+
+.text-description::-webkit-scrollbar {
+  display: none;
+}
