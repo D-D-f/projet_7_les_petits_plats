@@ -16,9 +16,11 @@
 }
 
 .text-description {
-  height: 100px;
+  height: 102px;
   text-overflow: clip;
   overflow: auto;
+  font-size: 14px;
+  scrollbar-width: none;
 }
 
 .text-description::-webkit-scrollbar {
@@ -34,10 +36,20 @@
   border-radius: 4px;
 }
 
-.text-description {
-  scrollbar-width: none;
-}
-
 .text-description::-webkit-scrollbar {
   display: none;
+}
+
+.image {
+  height: 253px;
+  object-fit: cover;
+}
+
+.title_card {
+  font-size: 18px;
+  font-family: $font-primary;
+}
+
+.heightContainer {
+  height: 200px;
 }

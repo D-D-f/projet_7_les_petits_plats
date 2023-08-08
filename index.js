@@ -102,23 +102,24 @@ const card = ({ name, image, description, ingredients }) => {
   const p = document.createElement("p");
   const containerRecette = document.createElement("div");
   const rowRecette = document.createElement("div");
-  containerRecette.classList.add("container");
+  containerRecette.classList.add("container", "m-2", "heightContainer");
   containerRecette.append(h5Ingred);
   rowRecette.classList.add("row", "row-cols-2");
   containerRecette.append(rowRecette);
   article.classList.add("col-4", "mb-4");
   article.append(divCard);
   divCard.classList.add("card", "p-0");
-  img.classList.add("card-img-top", "h-50", "w-100");
-  divBody.classList.add("card-body");
+  img.classList.add("card-img-top", "position-relative", "w-100", "image");
+  divBody.classList.add("card-body", "m-2");
   section.appendChild(article);
   divCard.append(img, divBody, containerRecette);
   divBody.append(title, h5, p);
   title.innerText = name;
+  title.classList.add("title_card", "mb-4");
   img.setAttribute("src", `assets/photos/${image}`);
   img.setAttribute("alt", name);
-  img.classList.add("position-relative");
   h5.innerText = "RECETTE";
+  h5.classList.add("mt-2");
   h5Ingred.innerText = "INGRÉDIENTS";
   p.innerText = description;
   p.classList.add("text-description");
@@ -129,8 +130,6 @@ const card = ({ name, image, description, ingredients }) => {
 
   return article;
 };
-
-const displayCard = () => {};
 
 const init = async () => {
   const getRecettes = await getData();
