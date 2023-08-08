@@ -88,11 +88,12 @@ const createDivRecette = (parent, ingredient, quantity, unit) => {
   }`;
 };
 
-const card = ({ name, image, description, ingredients }) => {
+const card = ({ name, image, description, ingredients, time }) => {
   const section = document.querySelector(
     ".section > .container > .allCard > .row"
   );
   const article = document.createElement("article");
+  const times = document.createElement("span");
   const divCard = document.createElement("div");
   const img = document.createElement("img");
   const divBody = document.createElement("div");
@@ -106,10 +107,10 @@ const card = ({ name, image, description, ingredients }) => {
   containerRecette.append(h5Ingred);
   rowRecette.classList.add("row", "row-cols-2");
   containerRecette.append(rowRecette);
-  article.classList.add("col-4", "mb-4");
-  article.append(divCard);
+  article.classList.add("col-4", "mb-4", "position-relative");
+  article.append(times, divCard);
   divCard.classList.add("card", "p-0");
-  img.classList.add("card-img-top", "position-relative", "w-100", "image");
+  img.classList.add("card-img-top", "w-100", "image");
   divBody.classList.add("card-body", "m-2");
   section.appendChild(article);
   divCard.append(img, divBody, containerRecette);
@@ -123,6 +124,17 @@ const card = ({ name, image, description, ingredients }) => {
   h5Ingred.innerText = "INGRÉDIENTS";
   p.innerText = description;
   p.classList.add("text-description");
+  times.innerText = `${time}min`;
+  times.classList.add(
+    "bg-primary",
+    "p-2",
+    "ps-3",
+    "pe-3",
+    "rounded-4",
+    "position-absolute",
+    "z-1",
+    "time"
+  );
 
   ingredients.forEach((item) => {
     createDivRecette(rowRecette, item.ingredient, item.quantity, item.unit);
