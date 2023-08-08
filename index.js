@@ -145,7 +145,9 @@ const card = ({ name, image, description, ingredients, time }) => {
 
 const init = async () => {
   const getRecettes = await getData();
+  const nbRecette = document.querySelector(".nbRecette");
   displayAllInfo(getRecettes);
+  nbRecette.innerText = `${getRecettes.length} Recettes`;
 
   getRecettes.forEach((recette) => {
     card(recette);
