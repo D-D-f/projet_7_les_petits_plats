@@ -143,6 +143,25 @@ const card = ({ name, image, description, ingredients, time }) => {
   return article;
 };
 
+const getValueUser = () => {
+  const formHeader = document.querySelector('#form_header');
+
+  formHeader.addEventListener('submit', (e) => {
+    e.preventDefault();
+    const form = new FormData(formHeader);
+    const formValues = {};
+    for (const [name, value] of form.entries()) {
+      if(value.length >= 3) {
+        formValues[name] = value;
+      }
+    }
+    console.log(formValues)
+    return formValues;
+  })
+}
+
+console.log(getValueUser())
+
 const init = async () => {
   const getRecettes = await getData();
   const nbRecette = document.querySelector(".nbRecette");
