@@ -1,4 +1,10 @@
 const form = document.querySelector('#form_header');
+const nbRecette = document.querySelector(".nbRecette");
+
+const allFilter = {
+  arrayPrincipal : [],
+  userValue: []
+}
 
 const getData = async () => {
   try {
@@ -120,7 +126,7 @@ const card = ({ name, image, description, ingredients, time }) => {
   divCard.classList.add("card", "p-0");
   img.classList.add("card-img-top", "w-100", "image");
   divBody.classList.add("card-body", "m-2");
-  section.appendChild(article);
+  section.append(article);
   divCard.append(img, divBody, containerRecette);
   divBody.append(title, h5, p);
   title.innerText = name;
@@ -151,34 +157,45 @@ const card = ({ name, image, description, ingredients, time }) => {
   return article;
 };
 
-// get value user
-const getForm = (array, e) => {
-  e.preventDefault();
-  const getFormulaire = new FormData(form);
-  let formValues = {};
+const filterName = () => {
+  const name = allFilter.arrayPrincipal.filter((name) => name.name.toLowerCase().startsWith(allFilter.userValue[0]));
+  const allCard = document.querySelector('.allCard > .row');
+  allCard.innerHTML = "";
+console.log(allCard)
+  name.forEach((filter) => {
+    card(filter);
+  })
+  displayAllInfo(name);
 
-  for(const [key, value] of getFormulaire.entries()) {
-    if(value.length >=3) {
-      formValues[key] = value;
-    }
-  }
-
-
-  return formValues;
 }
 
+// get value user
+const getForm = (e) => {
+  e.preventDefault();
+  const getFormulaire = new FormData(form);
+  const formValues = {}
+  for(const [key, value] of getFormulaire.entries()) {
+    if(value.length >=3) {
+      allFilter.userValue.push(formValues[key] = value.toLowerCase())
+      if(allFilter.userValue.length > 1) {
+        allFilter.userValue.shift();
+      }
+      filterName()
+    }
+  }
+}
 
 const init = async () => {
   const getRecettes = await getData();
-  const nbRecette = document.querySelector(".nbRecette");
+  allFilter.arrayPrincipal.push(...getRecettes);
+
   getRecettes.forEach((recette) => {
     card(recette);
   });
-
   displayAllInfo(getRecettes);
   nbRecette.innerText = `${getRecettes.length} Recettes`;
 
-  form.addEventListener('submit', (e) => getForm(getRecettes, e));
+  form.addEventListener('submit',  getForm);
 };
 
 init();
