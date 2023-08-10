@@ -1,6 +1,7 @@
 const form = document.querySelector('#form_header');
 const nbRecette = document.querySelector(".nbRecette");
 const allCard = document.querySelector('.allCard > .row');
+const allUl = document.querySelectorAll('.ul_list');
 
 const allFilter = {
   arrayPrincipal : [],
@@ -79,6 +80,7 @@ const filterAllUstensils = (recettes) => {
 
 // Function for display all filter
 const displayAllInfo = (array) => {
+  console.log(array)
   filterAllIngredients(array);
   allAppliance(array);
   filterAllUstensils(array);
@@ -164,6 +166,9 @@ const filterName = () => {
   name.forEach((filter) => {
     card(filter);
   })
+  allUl.forEach((ul) => {
+    ul.innerHTML = ""
+  })
   displayAllInfo(name);
   nbRecette.innerText = `${name.length} Recettes`;
 }
@@ -186,6 +191,9 @@ const getForm = (e) => {
         card(recette);
       });
       nbRecette.innerText = `${allFilter.arrayPrincipal.length} Recettes`;
+      allUl.forEach((ul) => {
+        ul.innerHTML = "";
+      })
       displayAllInfo(allFilter.arrayPrincipal);
     }
   }
