@@ -1,5 +1,6 @@
 const form = document.querySelector('#form_header');
 const nbRecette = document.querySelector(".nbRecette");
+const allCard = document.querySelector('.allCard > .row');
 
 const allFilter = {
   arrayPrincipal : [],
@@ -159,14 +160,12 @@ const card = ({ name, image, description, ingredients, time }) => {
 
 const filterName = () => {
   const name = allFilter.arrayPrincipal.filter((name) => name.name.toLowerCase().startsWith(allFilter.userValue[0]));
-  const allCard = document.querySelector('.allCard > .row');
   allCard.innerHTML = "";
-console.log(allCard)
   name.forEach((filter) => {
     card(filter);
   })
   displayAllInfo(name);
-
+  nbRecette.innerText = `${name.length} Recettes`;
 }
 
 // get value user
@@ -181,6 +180,13 @@ const getForm = (e) => {
         allFilter.userValue.shift();
       }
       filterName()
+    } else {
+      allCard.innerHTML = "";
+      allFilter.arrayPrincipal.forEach((recette) => {
+        card(recette);
+      });
+      nbRecette.innerText = `${allFilter.arrayPrincipal.length} Recettes`;
+      displayAllInfo(allFilter.arrayPrincipal);
     }
   }
 }
