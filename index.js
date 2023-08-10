@@ -13,6 +13,7 @@ const getData = async () => {
   }
 };
 
+// Filter for display ingredient
 const filterAllIngredients = (recettes) => {
   const ul = document.querySelector(".ingredient");
   let allIngredients = [];
@@ -31,6 +32,7 @@ const filterAllIngredients = (recettes) => {
   });
 };
 
+// Filter for display appliance
 const allAppliance = (recettes) => {
   const ul = document.querySelector(".appliances");
   let allAppliances = [];
@@ -47,6 +49,7 @@ const allAppliance = (recettes) => {
   });
 };
 
+// Filter for display ustensil
 const filterAllUstensils = (recettes) => {
   const ul = document.querySelector(".ustensiles");
   let allUstensils = [];
@@ -65,12 +68,14 @@ const filterAllUstensils = (recettes) => {
   });
 };
 
+// Function for display all filter
 const displayAllInfo = (array) => {
   filterAllIngredients(array);
   allAppliance(array);
   filterAllUstensils(array);
 };
 
+// Create element for card
 const createDivRecette = (parent, ingredient, quantity, unit) => {
   const block = document.createElement("div");
   const pIngred = document.createElement("p");
@@ -88,6 +93,7 @@ const createDivRecette = (parent, ingredient, quantity, unit) => {
   }`;
 };
 
+// CreateElement for Card
 const card = ({ name, image, description, ingredients, time }) => {
   const section = document.querySelector(
     ".section > .container > .allCard > .row"
@@ -143,33 +149,17 @@ const card = ({ name, image, description, ingredients, time }) => {
   return article;
 };
 
-const getValueUser = () => {
-  const formHeader = document.querySelector('#form_header');
-
-  formHeader.addEventListener('submit', (e) => {
-    e.preventDefault();
-    const form = new FormData(formHeader);
-    const formValues = {};
-    for (const [name, value] of form.entries()) {
-      if(value.length >= 3) {
-        formValues[name] = value;
-      }
-    }
-    console.log(formValues)
-    return formValues;
-  })
-}
-
-console.log(getValueUser())
 
 const init = async () => {
   const getRecettes = await getData();
   const nbRecette = document.querySelector(".nbRecette");
-  displayAllInfo(getRecettes);
-  nbRecette.innerText = `${getRecettes.length} Recettes`;
 
   getRecettes.forEach((recette) => {
     card(recette);
   });
+
+  displayAllInfo(getRecettes);
+  nbRecette.innerText = `${getRecettes.length} Recettes`;
 };
+
 init();
