@@ -152,30 +152,33 @@ const card = ({ name, image, description, ingredients, time }) => {
 };
 
 // get value user
-const getForm = (e) => {
+const getForm = (array, e) => {
   e.preventDefault();
   const getFormulaire = new FormData(form);
   let formValues = {};
 
   for(const [key, value] of getFormulaire.entries()) {
-    formValues[key] = value;
+    if(value.length >=3) {
+      formValues[key] = value;
+    }
   }
+
+
   return formValues;
 }
-
-form.addEventListener('submit', getForm);
 
 
 const init = async () => {
   const getRecettes = await getData();
   const nbRecette = document.querySelector(".nbRecette");
-
   getRecettes.forEach((recette) => {
     card(recette);
   });
 
   displayAllInfo(getRecettes);
   nbRecette.innerText = `${getRecettes.length} Recettes`;
+
+  form.addEventListener('submit', (e) => getForm(getRecettes, e));
 };
 
 init();
