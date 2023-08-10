@@ -1,3 +1,5 @@
+const form = document.querySelector('#form_header');
+
 const getData = async () => {
   try {
     const requete = await fetch("./public/recettes.json", {
@@ -148,6 +150,20 @@ const card = ({ name, image, description, ingredients, time }) => {
 
   return article;
 };
+
+// get value user
+const getForm = (e) => {
+  e.preventDefault();
+  const getFormulaire = new FormData(form);
+  let formValues = {};
+
+  for(const [key, value] of getFormulaire.entries()) {
+    formValues[key] = value;
+  }
+  return formValues;
+}
+
+form.addEventListener('submit', getForm);
 
 
 const init = async () => {
