@@ -1,12 +1,12 @@
-const form = document.querySelector('#form_header');
+const form = document.querySelector("#form_header");
 const nbRecette = document.querySelector(".nbRecette");
-const allCard = document.querySelector('.allCard > .row');
-const allUl = document.querySelectorAll('.ul_list');
+const allCard = document.querySelector(".allCard > .row");
+const allUl = document.querySelectorAll(".ul_list");
 
 const allFilter = {
-  arrayPrincipal : [],
-  userValue: []
-}
+  arrayPrincipal: [],
+  userValue: [],
+};
 
 const getData = async () => {
   try {
@@ -25,6 +25,7 @@ const getData = async () => {
 
 // Filter for display ingredient
 const filterAllIngredients = (recettes) => {
+  console.log(recettes);
   const ul = document.querySelector(".ingredient");
   let allIngredients = [];
   recettes.forEach((recette) => {
@@ -161,30 +162,44 @@ const card = ({ name, image, description, ingredients, time }) => {
 
 // filter for name
 const filterName = () => {
-  const name = allFilter.arrayPrincipal.filter(name => name.name.toLowerCase().match(allFilter.userValue[0].toLowerCase()));
+  const getName = allFilter.arrayPrincipal
+    .map((item) =>
+      item.name
+        .toLowerCase()
+        .split(" ")
+        .filter((item) => item.startsWith(allFilter.userValue[0].toLowerCase()))
+    )
+    .filter((item) => item.length > 0);
+
+  const getNameDeleteDouble = Array.from(new Set(...getName)).join("");
+  const getIndex = allFilter.arrayPrincipal.filter((item) =>
+    item.name.toLowerCase().split(" ").includes(getNameDeleteDouble)
+  );
+
   allCard.innerHTML = "";
-  name.forEach((filter) => {
+  getIndex.forEach((filter) => {
     card(filter);
-  })
+  });
   allUl.forEach((ul) => {
-    ul.innerHTML = ""
-  })
-  displayAllInfo(name);
-  nbRecette.innerText = `${name.length} Recettes`;
-}
+    ul.innerHTML = "";
+  });
+
+  displayAllInfo(getIndex);
+  nbRecette.innerText = `${getIndex.length} Recettes`;
+};
 
 // get value user
 const getForm = (e) => {
   e.preventDefault();
   const getFormulaire = new FormData(form);
-  const formValues = {}
-  for(const [key, value] of getFormulaire.entries()) {
-    if(value.length >=3) {
-      allFilter.userValue.push(formValues[key] = value.toLowerCase())
-      if(allFilter.userValue.length > 1) {
+  const formValues = {};
+  for (const [key, value] of getFormulaire.entries()) {
+    if (value.length >= 3) {
+      allFilter.userValue.push((formValues[key] = value.toLowerCase()));
+      if (allFilter.userValue.length > 1) {
         allFilter.userValue.shift();
       }
-      filterName()
+      filterName();
     } else {
       allCard.innerHTML = "";
       allFilter.arrayPrincipal.forEach((recette) => {
@@ -193,11 +208,11 @@ const getForm = (e) => {
       nbRecette.innerText = `${allFilter.arrayPrincipal.length} Recettes`;
       allUl.forEach((ul) => {
         ul.innerHTML = "";
-      })
+      });
       displayAllInfo(allFilter.arrayPrincipal);
     }
   }
-}
+};
 
 const init = async () => {
   const getRecettes = await getData();
@@ -209,7 +224,7 @@ const init = async () => {
   displayAllInfo(getRecettes);
   nbRecette.innerText = `${getRecettes.length} Recettes`;
 
-  form.addEventListener('submit',  getForm);
+  form.addEventListener("submit", getForm);
 };
 
 init();
