@@ -25,7 +25,6 @@ const getData = async () => {
 
 // Filter for display ingredient
 const filterAllIngredients = (recettes) => {
-  console.log(recettes);
   const ul = document.querySelector(".ingredient");
   let allIngredients = [];
   recettes.forEach((recette) => {
