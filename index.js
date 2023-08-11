@@ -80,7 +80,6 @@ const filterAllUstensils = (recettes) => {
 
 // Function for display all filter
 const displayAllInfo = (array) => {
-  console.log(array)
   filterAllIngredients(array);
   allAppliance(array);
   filterAllUstensils(array);
@@ -160,8 +159,9 @@ const card = ({ name, image, description, ingredients, time }) => {
   return article;
 };
 
+// filter for name
 const filterName = () => {
-  const name = allFilter.arrayPrincipal.filter((name) => name.name.toLowerCase().startsWith(allFilter.userValue[0]));
+  const name = allFilter.arrayPrincipal.filter(name => name.name.toLowerCase().match(allFilter.userValue[0].toLowerCase()));
   allCard.innerHTML = "";
   name.forEach((filter) => {
     card(filter);
