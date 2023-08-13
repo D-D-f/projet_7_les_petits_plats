@@ -187,6 +187,21 @@ const filterName = () => {
   nbRecette.innerText = `${getIndex.length} Recettes`;
 };
 
+const filterIngredients = () => {
+  let allIngredients = [];
+  allFilter.arrayPrincipal.forEach((array) => {
+    array.ingredients.forEach((item) => {
+      allIngredients.push(item.ingredient.toLowerCase().split(" "));
+    });
+  });
+
+  const getResult = allIngredients.filter((ingredient) =>
+    ingredient.includes(allFilter.userValue[0])
+  );
+  console.log(allFilter.userValue[0]);
+  console.log(getResult);
+};
+
 // get value user
 const getForm = (e) => {
   e.preventDefault();
@@ -199,6 +214,7 @@ const getForm = (e) => {
         allFilter.userValue.shift();
       }
       filterName();
+      filterIngredients();
     } else {
       allCard.innerHTML = "";
       allFilter.arrayPrincipal.forEach((recette) => {
@@ -222,7 +238,6 @@ const init = async () => {
   });
   displayAllInfo(getRecettes);
   nbRecette.innerText = `${getRecettes.length} Recettes`;
-
   form.addEventListener("submit", getForm);
 };
 
