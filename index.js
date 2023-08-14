@@ -189,17 +189,39 @@ const filterName = () => {
 
 const filterIngredients = () => {
   let allIngredients = [];
+  let copyArrayPrincipal = [...allFilter.arrayPrincipal];
+  let ingredientFinal = [];
+
   allFilter.arrayPrincipal.forEach((array) => {
     array.ingredients.forEach((item) => {
       allIngredients.push(item.ingredient.toLowerCase().split(" "));
     });
   });
 
-  const getResult = allIngredients.filter((ingredient) =>
-    ingredient.includes(allFilter.userValue[0])
-  );
-  console.log(allFilter.userValue[0]);
-  console.log(getResult);
+  copyArrayPrincipal.forEach((addIngredient) => {
+    addIngredient.words = [];
+    addIngredient.ingredients.map((ingred) => {
+      addIngredient.words.push(ingred.ingredient.toLowerCase().split(" "));
+    });
+  });
+
+  console.log(copyArrayPrincipal);
+  copyArrayPrincipal
+    .map((ingredient) => ingredient.words)
+    .forEach((ingredient, index) =>
+      ingredient.forEach((ingred) =>
+        ingred.filter((word) => {
+          if (word.startsWith(allFilter.userValue[0])) {
+            ingredientFinal.push(index);
+          }
+        })
+      )
+    );
+
+  const index = ingredientFinal.map((index) => allFilter.arrayPrincipal[index]);
+  index.forEach((item) => {
+    console.log(item);
+  });
 };
 
 // get value user
