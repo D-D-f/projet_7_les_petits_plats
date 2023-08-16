@@ -159,14 +159,27 @@ const card = ({ name, image, description, ingredients, time }) => {
   return article;
 };
 
+const displayFilterCard = (arrayFilter) => {
+  allCard.innerHTML = "";
+  arrayFilter.map((filter) => {
+    return card(filter);
+  });
+  for (const ul of allUl) {
+    ul.innerHTML = "";
+  }
+
+  displayAllInfo(arrayFilter);
+  nbRecette.innerText = `${arrayFilter.length} Recettes`;
+};
+
 // filter for name
 const filterName = () => {
   const getName = allFilter.arrayPrincipal
-    .map((item) =>
-      item.name
+    .map((name) =>
+      name.name
         .toLowerCase()
         .split(" ")
-        .filter((item) => item.startsWith(allFilter.userValue[0].toLowerCase()))
+        .filter((item) => item.startsWith(allFilter.userValue[0]))
     )
     .filter((item) => item.length > 0);
 
@@ -174,17 +187,7 @@ const filterName = () => {
   const getIndex = allFilter.arrayPrincipal.filter((item) =>
     item.name.toLowerCase().split(" ").includes(getNameDeleteDouble)
   );
-
-  allCard.innerHTML = "";
-  getIndex.forEach((filter) => {
-    card(filter);
-  });
-  allUl.forEach((ul) => {
-    ul.innerHTML = "";
-  });
-
-  displayAllInfo(getIndex);
-  nbRecette.innerText = `${getIndex.length} Recettes`;
+  displayFilterCard(getIndex);
 };
 
 const filterIngredients = () => {
