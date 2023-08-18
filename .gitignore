@@ -1,2 +1,7 @@
 node_modules
 .sass-cache
+.DS_Store
+modules.xml
+vcs.xml
+projet_7_les_petits_plats.iml
+.idea
