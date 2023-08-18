@@ -159,6 +159,7 @@ const card = ({ name, image, description, ingredients, time }) => {
   return article;
 };
 
+// display filter
 const displayFilterCard = (arrayFilter) => {
   allCard.innerHTML = "";
   arrayFilter.map((filter) => {
@@ -173,58 +174,42 @@ const displayFilterCard = (arrayFilter) => {
 };
 
 // filter for name
-const filterName = () => {
-  const getName = allFilter.arrayPrincipal
-    .map((name) =>
-      name.name
-        .toLowerCase()
-        .split(" ")
-        .filter((item) => item.startsWith(allFilter.userValue[0]))
-    )
-    .filter((item) => item.length > 0);
+const filterNameAndIngredient = () => {
+  const names = allFilter.arrayPrincipal.flatMap(recipes => recipes.name.toLowerCase().split(' ')).filter(name => name.startsWith(allFilter.userValue[0].toLowerCase()))
+  const uniqueNames = names.reduce((unique, name) => {
+    if (!unique.includes(name)) {
+      unique.push(name);
+    }
+    return unique;
+  }, []);
 
-  const getNameDeleteDouble = Array.from(new Set(...getName)).join("");
-  const getIndex = allFilter.arrayPrincipal.filter((item) =>
-    item.name.toLowerCase().split(" ").includes(getNameDeleteDouble)
-  );
-  displayFilterCard(getIndex);
-};
+  const searchName = allFilter.arrayPrincipal.filter(name => name.name.toLowerCase().split(' ').includes(uniqueNames.join('')));
 
-const filterIngredients = () => {
-  let allIngredients = [];
-  let copyArrayPrincipal = [...allFilter.arrayPrincipal];
-  let ingredientFinal = [];
+  const filteredIngredients = allFilter.arrayPrincipal.flatMap(recipe => recipe.ingredients.filter(ingredient =>
+      ingredient.ingredient.toLowerCase().includes(allFilter.userValue[0].toLowerCase())
+  ));
 
-  allFilter.arrayPrincipal.forEach((array) => {
-    array.ingredients.forEach((item) => {
-      allIngredients.push(item.ingredient.toLowerCase().split(" "));
-    });
-  });
 
-  copyArrayPrincipal.forEach((addIngredient) => {
-    addIngredient.words = [];
-    addIngredient.ingredients.map((ingred) => {
-      addIngredient.words.push(ingred.ingredient.toLowerCase().split(" "));
-    });
-  });
-
-  console.log(copyArrayPrincipal);
-  copyArrayPrincipal
-    .map((ingredient) => ingredient.words)
-    .forEach((ingredient, index) =>
-      ingredient.forEach((ingred) =>
-        ingred.filter((word) => {
-          if (word.startsWith(allFilter.userValue[0])) {
-            ingredientFinal.push(index);
-          }
-        })
-      )
+  const filteredRecipes = allFilter.arrayPrincipal.filter(recipe => {
+    const matchedIngredients = recipe.ingredients.filter(ingredient =>
+        ingredient.ingredient.toLowerCase().includes(allFilter.userValue[0].toLowerCase())
     );
 
-  const index = ingredientFinal.map((index) => allFilter.arrayPrincipal[index]);
-  index.forEach((item) => {
-    console.log(item);
-  });
+    return matchedIngredients.length > 0;
+  })
+
+  const arrayDisplay = [...searchName, ...filteredRecipes];
+
+  const uniqueObjects = arrayDisplay.reduce((accumulator, currentObj) => {
+    const existingObj = accumulator.find(obj => obj.id === currentObj.id);
+    if (!existingObj) {
+      accumulator.push(currentObj);
+    }
+
+    return accumulator;
+  }, []);
+
+  displayFilterCard(uniqueObjects)
 };
 
 // get value user
@@ -238,8 +223,7 @@ const getForm = (e) => {
       if (allFilter.userValue.length > 1) {
         allFilter.userValue.shift();
       }
-      filterName();
-      filterIngredients();
+      filterNameAndIngredient()
     } else {
       allCard.innerHTML = "";
       allFilter.arrayPrincipal.forEach((recette) => {
