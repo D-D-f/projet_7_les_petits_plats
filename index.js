@@ -212,12 +212,31 @@ const filterIngredient = () => {
   return filteredRecipes;
 };
 
+const filterDescription = () => {
+  const getIndex = allFilter.arrayPrincipal.map((item) => {
+    return item.description
+      .toLowerCase()
+      .split(" ")
+      .filter((item) => item.startsWith(allFilter.userValue[0]));
+  });
+
+  const index = getIndex
+    .map((item, index) => item.length > 0 && index)
+    .filter((item) => item !== false);
+
+  const displayDescription = index.map(
+    (item) => allFilter.arrayPrincipal[item]
+  );
+  return displayDescription;
+};
+
 // filter for name
-const filterNameAndIngredient = () => {
+const filterNameAndIngredientAndDescription = () => {
   const name = filterName();
   const ingredients = filterIngredient();
+  const description = filterDescription();
 
-  const arrayDisplay = [...name, ...ingredients];
+  const arrayDisplay = [...name, ...ingredients, ...description];
 
   const uniqueObjects = arrayDisplay.reduce((acc, cur) => {
     const existingObj = acc.find((obj) => obj.id === cur.id);
@@ -242,7 +261,7 @@ const getForm = (e) => {
       if (allFilter.userValue.length > 1) {
         allFilter.userValue.shift();
       }
-      filterNameAndIngredient();
+      filterNameAndIngredientAndDescription();
     } else {
       allCard.innerHTML = "";
       allFilter.arrayPrincipal.forEach((recette) => {
