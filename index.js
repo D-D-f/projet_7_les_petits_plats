@@ -173,9 +173,10 @@ const displayFilterCard = (arrayFilter) => {
   nbRecette.innerText = `${arrayFilter.length} Recettes`;
 };
 
-// filter for name
-const filterNameAndIngredient = () => {
-  const names = allFilter.arrayPrincipal.flatMap(recipes => recipes.name.toLowerCase().split(' ')).filter(name => name.startsWith(allFilter.userValue[0].toLowerCase()))
+const filterName = () => {
+  const names = allFilter.arrayPrincipal
+    .flatMap((recipes) => recipes.name.toLowerCase().split(" "))
+    .filter((name) => name.startsWith(allFilter.userValue[0].toLowerCase()));
   const uniqueNames = names.reduce((unique, name) => {
     if (!unique.includes(name)) {
       unique.push(name);
@@ -183,33 +184,51 @@ const filterNameAndIngredient = () => {
     return unique;
   }, []);
 
-  const searchName = allFilter.arrayPrincipal.filter(name => name.name.toLowerCase().split(' ').includes(uniqueNames.join('')));
+  const searchName = allFilter.arrayPrincipal.filter((name) =>
+    name.name.toLowerCase().split(" ").includes(uniqueNames.join(""))
+  );
+  return searchName;
+};
 
-  const filteredIngredients = allFilter.arrayPrincipal.flatMap(recipe => recipe.ingredients.filter(ingredient =>
-      ingredient.ingredient.toLowerCase().includes(allFilter.userValue[0].toLowerCase())
-  ));
+const filterIngredient = () => {
+  const filteredIngredients = allFilter.arrayPrincipal.flatMap((recipe) =>
+    recipe.ingredients.filter((ingredient) =>
+      ingredient.ingredient
+        .toLowerCase()
+        .includes(allFilter.userValue[0].toLowerCase())
+    )
+  );
 
-
-  const filteredRecipes = allFilter.arrayPrincipal.filter(recipe => {
-    const matchedIngredients = recipe.ingredients.filter(ingredient =>
-        ingredient.ingredient.toLowerCase().includes(allFilter.userValue[0].toLowerCase())
+  const filteredRecipes = allFilter.arrayPrincipal.filter((recipe) => {
+    const matchedIngredients = recipe.ingredients.filter((ingredient) =>
+      ingredient.ingredient
+        .toLowerCase()
+        .includes(allFilter.userValue[0].toLowerCase())
     );
 
     return matchedIngredients.length > 0;
-  })
+  });
 
-  const arrayDisplay = [...searchName, ...filteredRecipes];
+  return filteredRecipes;
+};
 
-  const uniqueObjects = arrayDisplay.reduce((accumulator, currentObj) => {
-    const existingObj = accumulator.find(obj => obj.id === currentObj.id);
+// filter for name
+const filterNameAndIngredient = () => {
+  const name = filterName();
+  const ingredients = filterIngredient();
+
+  const arrayDisplay = [...name, ...ingredients];
+
+  const uniqueObjects = arrayDisplay.reduce((acc, cur) => {
+    const existingObj = acc.find((obj) => obj.id === cur.id);
     if (!existingObj) {
-      accumulator.push(currentObj);
+      acc.push(cur);
     }
 
-    return accumulator;
+    return acc;
   }, []);
 
-  displayFilterCard(uniqueObjects)
+  displayFilterCard(uniqueObjects);
 };
 
 // get value user
@@ -223,7 +242,7 @@ const getForm = (e) => {
       if (allFilter.userValue.length > 1) {
         allFilter.userValue.shift();
       }
-      filterNameAndIngredient()
+      filterNameAndIngredient();
     } else {
       allCard.innerHTML = "";
       allFilter.arrayPrincipal.forEach((recette) => {
