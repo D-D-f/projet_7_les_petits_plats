@@ -247,6 +247,8 @@ const filterNameAndIngredientAndDescription = () => {
     return acc;
   }, []);
 
+  console.log(uniqueObjects);
+
   displayFilterCard(uniqueObjects);
 };
 
