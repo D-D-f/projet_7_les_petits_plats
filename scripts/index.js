@@ -8,7 +8,6 @@ const formIngredient = document.querySelector("#form_ingredient");
 
 const allFilter = {
   arrayPrincipal: [],
-  userValue: [],
   searchUser: [],
 };
 
@@ -194,18 +193,24 @@ const filterForMainSearchBar = (recipes) => {
   filterAll(deleteD, ingredients, appliance, ustensils);
 };
 
-const filterNameAndIngredientAndDescription = () => {
+const filterNameAndIngredientAndDescription = (valueUser) => {
   const name = filterName(
-    allFilter.arrayPrincipal,
-    allFilter.userValue.join("")
+    allFilter.searchUser.length > 0
+      ? allFilter.searchUser
+      : allFilter.arrayPrincipal,
+    valueUser
   );
   const ingredients = filterIngredients(
-    allFilter.arrayPrincipal,
-    allFilter.userValue.join("")
+    allFilter.searchUser.length > 0
+      ? allFilter.searchUser
+      : allFilter.arrayPrincipal,
+    valueUser
   );
   const description = filterDescription(
-    allFilter.arrayPrincipal,
-    allFilter.userValue.join("")
+    allFilter.searchUser.length > 0
+      ? allFilter.searchUser
+      : allFilter.arrayPrincipal,
+    valueUser
   );
 
   const arrayDisplay = [...name, ...ingredients, ...description];
@@ -220,7 +225,6 @@ const filterNameAndIngredientAndDescription = () => {
   }, []);
 
   allFilter.searchUser.push(...uniqueObjects);
-
   displayFilterCard(uniqueObjects);
 };
 
@@ -307,6 +311,7 @@ const card = ({ name, image, description, ingredients, time }) => {
 
 // display filter
 const displayFilterCard = (arrayFilter) => {
+  console.log(arrayFilter);
   allCard.innerHTML = "";
   arrayFilter.map((filter) => {
     return card(filter);
@@ -322,27 +327,18 @@ const displayFilterCard = (arrayFilter) => {
 // get value user
 const getForm = (e) => {
   e.preventDefault();
-  const getFormulaire = new FormData(form);
-  const formValues = {};
-
-  for (const [key, value] of getFormulaire.entries()) {
-    if (value.length >= 3) {
-      allFilter.userValue.push((formValues[key] = value.toLowerCase()));
-      if (allFilter.userValue.length > 1) {
-        allFilter.userValue.shift();
-      }
-      filterNameAndIngredientAndDescription();
-    } else {
-      allCard.innerHTML = "";
-      allFilter.arrayPrincipal.forEach((recette) => {
-        card(recette);
-      });
-      nbRecette.innerText = `${allFilter.arrayPrincipal.length} Recettes`;
-      allUl.forEach((ul) => {
-        ul.innerHTML = "";
-      });
-      displayAllInfo(allFilter.arrayPrincipal);
-    }
+  if (e.target[0].value.length >= 3) {
+    filterNameAndIngredientAndDescription(e.target[0].value);
+  } else {
+    allCard.innerHTML = "";
+    allFilter.arrayPrincipal.forEach((recette) => {
+      card(recette);
+    });
+    nbRecette.innerText = `${allFilter.arrayPrincipal.length} Recettes`;
+    allUl.forEach((ul) => {
+      ul.innerHTML = "";
+    });
+    displayAllInfo(allFilter.arrayPrincipal);
   }
 };
 
@@ -472,7 +468,6 @@ formIngredient.addEventListener("submit", (e) => {
 const init = async () => {
   const getRecettes = await getData();
   allFilter.arrayPrincipal.push(...getRecettes);
-
   getRecettes.forEach((recette) => {
     card(recette);
   });
