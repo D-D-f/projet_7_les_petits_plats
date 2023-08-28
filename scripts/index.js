@@ -5,10 +5,12 @@ const allUl = document.querySelectorAll(".ul_list");
 const formUstensile = document.querySelector("#form_ustensile");
 const formAppliance = document.querySelector("#form_appliance");
 const formIngredient = document.querySelector("#form_ingredient");
+const tagContainer = document.querySelector(".filter_all");
 
 const allFilter = {
   arrayPrincipal: [],
   searchUser: [],
+  getFilter: [],
 };
 
 const getData = async () => {
@@ -62,6 +64,7 @@ const filterIngredients = (recipes, ingredient) => {
     const igrd = ingredient.ingredients.filter((igr) =>
       igr.ingredient.toLowerCase().split(" ").includes(getIngredient)
     );
+
     return igrd.length > 0;
   });
   return getObject;
@@ -92,13 +95,24 @@ const filterAppliances = (recipes, appliance) => {
   return filterAppliance;
 };
 
+const createTagFilter = (classe, texte) => {
+  const div = document.createElement("div");
+  const text = document.createElement("span");
+  const close = document.createElement("span");
+  div.append(text, close);
+  div.classList.add(classe);
+  text.innerText = texte;
+  close.innerHTML = "<i class='fa-solid fa-circle-xmark'></i>";
+  tagContainer.appendChild(div);
+};
+
 const filterAllIngredients = (recettes) => {
   const ul = document.querySelector(".ingredient");
   let allIngredients = [];
   recettes.forEach((recette) => {
     recette.ingredients.filter(
       (ingredient) =>
-        allIngredients.includes(ingredient.ingredient.toLowerCase()) !== true &&
+        !allIngredients.includes(ingredient.ingredient.toLowerCase()) &&
         allIngredients.push(ingredient.ingredient.toLowerCase())
     );
   });
@@ -107,6 +121,13 @@ const filterAllIngredients = (recettes) => {
     let li = document.createElement("li");
     li.innerText = ingredient;
     ul.append(li);
+
+    li.style.cursor = "pointer";
+
+    li.addEventListener("click", () => {
+      allFilter.getFilter.push(li.innerText);
+      createTagFilter("tag_ingred", li.innerText);
+    });
   });
 };
 
@@ -124,6 +145,12 @@ const allAppliance = (recettes) => {
     let li = document.createElement("li");
     li.innerText = appliance;
     ul.append(li);
+    li.style.cursor = "pointer";
+
+    li.addEventListener("click", () => {
+      allFilter.getFilter.push(li.innerText);
+      createTagFilter("tag_appliance", li.innerText);
+    });
   });
 };
 
@@ -134,7 +161,7 @@ const filterAllUstensils = (recettes) => {
   recettes.forEach((recette) => {
     recette.ustensils.filter(
       (ustensil) =>
-        allUstensils.includes(ustensil.toLowerCase()) !== true &&
+        !allUstensils.includes(ustensil.toLowerCase()) &&
         allUstensils.push(ustensil.toLowerCase())
     );
   });
@@ -143,6 +170,12 @@ const filterAllUstensils = (recettes) => {
     let li = document.createElement("li");
     li.innerText = ustensil;
     ul.append(li);
+    li.style.cursor = "pointer";
+
+    li.addEventListener("click", () => {
+      allFilter.getFilter.push(li.innerText);
+      createTagFilter("tag_ustensil", li.innerText);
+    });
   });
 };
 
@@ -161,7 +194,6 @@ const filterUstensile = (recipes, ustensils) => {
     .filter((item) => item !== false);
 
   const getUstensils = index.map((item) => recipes[item]);
-  console.log(getUstensils);
   return getUstensils;
 };
 
@@ -322,6 +354,16 @@ const displayFilterCard = (arrayFilter) => {
 
   displayAllInfo(arrayFilter);
   nbRecette.innerText = `${arrayFilter.length} Recettes`;
+};
+
+// function create tag
+const createTag = (text) => {
+  const container = document.querySelector(".filter_all");
+  const tag = document.createElement("div");
+  const deleteTag = document.createElement("span");
+  tag.innerText = text;
+  container.appendChild(tag);
+  tag.append(deleteTag);
 };
 
 // get value user
