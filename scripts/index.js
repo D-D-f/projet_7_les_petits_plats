@@ -132,6 +132,13 @@ const createTagFilter = (classe, texte) => {
   close.style.cursor = "pointer";
   close.addEventListener("click", () => {
     div.remove();
+    if (classe === "tag_ustensil") {
+      stateRecipes.ustensils = "";
+    } else if (classe === "tag_appliance") {
+      stateRecipes.appliance = "";
+    } else if (classe === "tag_ingred") {
+      stateRecipes.ingredient = "";
+    }
   });
 };
 
@@ -153,8 +160,31 @@ const filterAllIngredients = (recettes) => {
     li.style.cursor = "pointer";
 
     li.addEventListener("click", () => {
-      allFilter.getFilter.push(li.innerText);
-      allFilter.ingredient = li.innerText;
+      stateRecipes.ingredient = "";
+      stateRecipes.ingredient = li.innerText.toLowerCase();
+
+      createTagFilter("tag_ingred", li.innerText.toLowerCase());
+
+      const ingredient = filterIngredients(
+        stateRecipes.searchRecipeFilter.length > 0
+          ? stateRecipes.searchRecipeFilter
+          : stateRecipes.recipes,
+        li.innerText
+      );
+
+      stateRecipes.searchRecipeFilter.shift();
+      stateRecipes.searchRecipeFilter.push(...ingredient);
+
+      allCard.innerHTML = "";
+      ingredient.forEach((recette) => {
+        card(recette);
+      });
+
+      nbRecette.innerText = `${ingredient.length} Recettes`;
+      allUl.forEach((ul) => {
+        ul.innerHTML = "";
+      });
+      displayAllInfo(ingredient);
     });
   });
 };
@@ -171,13 +201,36 @@ const allAppliance = (recettes) => {
 
   allAppliances.forEach((appliance) => {
     let li = document.createElement("li");
-    li.innerText = appliance.toLowerCase();
+    li.innerText = appliance;
     ul.append(li);
     li.style.cursor = "pointer";
 
     li.addEventListener("click", () => {
-      allFilter.getFilter.push(li.innerText);
-      allFilter.appliance = li.innerText;
+      stateRecipes.appliance = "";
+      stateRecipes.appliance = li.innerText.toLowerCase();
+
+      createTagFilter("tag_appliance", li.innerText.toLowerCase());
+
+      const appliance = filterAppliances(
+        stateRecipes.searchRecipeFilter.length > 0
+          ? stateRecipes.searchRecipeFilter
+          : stateRecipes.recipes,
+        li.innerText
+      );
+
+      stateRecipes.searchRecipeFilter.shift();
+      stateRecipes.searchRecipeFilter.push(...appliance);
+
+      allCard.innerHTML = "";
+      appliance.forEach((recette) => {
+        card(recette);
+      });
+
+      nbRecette.innerText = `${appliance.length} Recettes`;
+      allUl.forEach((ul) => {
+        ul.innerHTML = "";
+      });
+      displayAllInfo(appliance);
     });
   });
 };
@@ -202,9 +255,9 @@ const filterAllUstensils = (recettes) => {
 
     li.addEventListener("click", () => {
       stateRecipes.ustensils = "";
-      stateRecipes.ustensils = li.innerText;
+      stateRecipes.ustensils = li.innerText.toLowerCase();
 
-      createTagFilter("tag_ustensil", li.innerText);
+      createTagFilter("tag_ustensil", li.innerText.toLowerCase());
 
       const ustensils = filterUstensile(
         stateRecipes.searchRecipeFilter.length > 0
@@ -212,6 +265,9 @@ const filterAllUstensils = (recettes) => {
           : stateRecipes.recipes,
         ustensil
       );
+
+      stateRecipes.searchRecipeFilter.shift();
+      stateRecipes.searchRecipeFilter.push(...ustensils);
 
       allCard.innerHTML = "";
       ustensils.forEach((recette) => {
@@ -399,36 +455,34 @@ formAppliance.addEventListener("submit", (e) => {
 
   if (stateRecipes.appliance !== "") {
     if (stateRecipes.searchRecipeFilter.length > 0) {
-      allCard.innerHTML = "";
-      const appliance = filterAppliances(
+      const appliance = filterUstensile(
         stateRecipes.searchRecipeFilter,
         e.target[0].value
       );
 
-      appliance.forEach((recette) => {
-        card(recette);
-      });
-      nbRecette.innerText = `${appliance.length} Recettes`;
       allUl.forEach((ul) => {
         ul.innerHTML = "";
       });
-      displayAllInfo(appliance);
+
+      stateRecipes.searchRecipeFilter.shift();
+      stateRecipes.searchRecipeFilter.push(appliance);
+      displayAllInfo(appliance, stateRecipes.appliance);
     } else {
-      allCard.innerHTML = "";
-      const appliance = filterIngredients(
+      const appliance = filterUstensile(
         stateRecipes.appliance,
         e.target[0].value
       );
 
-      appliance.forEach((recette) => {
-        card(recette);
-      });
-      nbRecette.innerText = `${appliance.length} Recettes`;
       allUl.forEach((ul) => {
         ul.innerHTML = "";
       });
-      displayAllInfo(appliance);
+      displayAllInfo(appliance, stateRecipes.appliance);
     }
+  } else {
+    allUl.forEach((ul) => {
+      ul.innerHTML = "";
+    });
+    displayAllInfo(stateRecipes.recipes);
   }
 });
 
@@ -439,36 +493,34 @@ formIngredient.addEventListener("submit", (e) => {
 
   if (stateRecipes.ingredient !== "") {
     if (stateRecipes.searchRecipeFilter.length > 0) {
-      allCard.innerHTML = "";
       const ingredient = filterIngredients(
         stateRecipes.searchRecipeFilter,
         e.target[0].value
       );
 
-      ingredient.forEach((recette) => {
-        card(recette);
-      });
-      nbRecette.innerText = `${ingredient.length} Recettes`;
       allUl.forEach((ul) => {
         ul.innerHTML = "";
       });
-      displayAllInfo(ingredient);
+
+      stateRecipes.searchRecipeFilter.shift();
+      stateRecipes.searchRecipeFilter.push(ingredient);
+      displayAllInfo(ingredient, stateRecipes.ingredient);
     } else {
-      allCard.innerHTML = "";
-      const ingredient = filterIngredients(
-        stateRecipes.recipes,
+      const ingredient = filterUstensile(
+        stateRecipes.ingredient,
         e.target[0].value
       );
 
-      ingredient.forEach((recette) => {
-        card(recette);
-      });
-      nbRecette.innerText = `${ingredient.length} Recettes`;
       allUl.forEach((ul) => {
         ul.innerHTML = "";
       });
-      displayAllInfo(ingredient);
+      displayAllInfo(ingredient, stateRecipes.ingredient);
     }
+  } else {
+    allUl.forEach((ul) => {
+      ul.innerHTML = "";
+    });
+    displayAllInfo(stateRecipes.recipes);
   }
 });
 
