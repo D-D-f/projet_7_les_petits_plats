@@ -7,10 +7,13 @@ const formAppliance = document.querySelector("#form_appliance");
 const formIngredient = document.querySelector("#form_ingredient");
 const tagContainer = document.querySelector(".filter_all");
 
-const allFilter = {
-  arrayPrincipal: [],
+const stateRecipes = {
+  recipes: [],
+  searchRecipeFilter: [],
   searchUser: [],
-  getFilter: [],
+  ingredient: "",
+  appliance: "",
+  ustensils: "",
 };
 
 const getData = async () => {
@@ -28,71 +31,92 @@ const getData = async () => {
   }
 };
 
-// function to filter the main search to names
-const filterName = (recipes, value) => {
-  const getName = recipes
-    .flatMap((recipe) => recipe.name.toLowerCase().split(" "))
-    .filter((name) => name.startsWith(value))
-    .reduce((acc, cur) => {
-      acc.includes(cur) === false ? acc.push(cur) : "";
-      return acc;
-    }, [])
-    .join("");
-
-  const filterForName = recipes.filter((recipe) =>
-    recipe.name.toLowerCase().split(" ").includes(getName)
-  );
-
-  return filterForName;
+const filterName = (recipes, wordUser) => {
+  if (wordUser !== "") {
+    const getName = recipes.filter((recipe) =>
+      recipe.name.toLowerCase().includes(wordUser.toLowerCase())
+    );
+    return getName;
+  }
 };
 
-// function to filter the main search ingredients
-const filterIngredients = (recipes, ingredient) => {
-  const getIngredient = recipes
-    .flatMap((item) => {
-      return item.ingredients.flatMap((item) =>
-        item.ingredient
-          .toLowerCase()
-          .split(" ")
-          .filter((item) => item.startsWith(ingredient))
+const filterIngredients = (recipes, wordUser) => {
+  if (wordUser !== "") {
+    const recipesWithUserIngredient = recipes.filter((recipe) => {
+      return recipe.ingredients.some((item) =>
+        item.ingredient.toLowerCase().includes(wordUser.toLowerCase())
       );
-    })
-    .filter((item, index, self) => self.indexOf(item) === index)
-    .join("");
+    });
 
-  const getObject = recipes.filter((ingredient) => {
-    const igrd = ingredient.ingredients.filter((igr) =>
-      igr.ingredient.toLowerCase().split(" ").includes(getIngredient)
+    return recipesWithUserIngredient;
+  }
+};
+
+const filterDescription = (recipes, wordUser) => {
+  if (wordUser !== "") {
+    const getDescription = recipes.filter((item) =>
+      item.description.toLowerCase().includes(wordUser.toLowerCase())
     );
 
-    return igrd.length > 0;
-  });
-  return getObject;
+    return getDescription;
+  }
 };
 
-// function to filter the main search description
-const filterDescription = (recipes, description) => {
-  const getIndex = recipes.map((item) => {
-    return item.description
-      .toLowerCase()
-      .split(" ")
-      .filter((item) => item.startsWith(description));
-  });
-
-  const index = getIndex
-    .map((item, index) => item.length > 0 && index)
-    .filter((item) => item !== false);
-
-  const displayDescription = index.map((item) => recipes[item]);
-  return displayDescription;
+const filterAppliances = (recipes, wordUser) => {
+  if (wordUser !== "") {
+    const filterAppliance = recipes.filter((elem) => {
+      return elem.appliance.toLowerCase().includes(wordUser.toLowerCase());
+    });
+    return filterAppliance;
+  }
 };
 
-// function to filter the main search appliance
-const filterAppliances = (recipes, appliance) => {
-  const filterAppliance = recipes.filter((elem) => {
-    return elem.appliance.toLowerCase().startsWith(appliance);
-  });
-  return filterAppliance;
+const filterUstensile = (recipes, wordUser) => {
+  if (wordUser !== "") {
+    const recipesWithUserUstenfils = recipes.filter((recipe) => {
+      return recipe.ustensils.some((item) =>
+        item.toLowerCase().includes(wordUser)
+      );
+    });
+
+    return recipesWithUserUstenfils;
+  }
+};
+
+const searchMainBar = () => {
+  const name = filterName(
+    stateRecipes.searchRecipeFilter.length > 0
+      ? stateRecipes.searchRecipeFilter
+      : stateRecipes.recipes,
+    stateRecipes.searchUser.join("")
+  );
+
+  const ingredient = filterIngredients(
+    stateRecipes.searchRecipeFilter.length > 0
+      ? stateRecipes.searchRecipeFilter
+      : stateRecipes.recipes,
+    stateRecipes.searchUser.join("")
+  );
+
+  const description = filterDescription(
+    stateRecipes.searchRecipeFilter.length > 0
+      ? stateRecipes.searchRecipeFilter
+      : stateRecipes.recipes,
+    stateRecipes.searchUser.join("")
+  );
+
+  const addAllArrayInOne = [...name, ...ingredient, ...description];
+
+  const uniqueArray = addAllArrayInOne.reduce((acc, cur) => {
+    const existingObj = acc.find((obj) => obj.id === cur.id);
+    if (!existingObj) {
+      acc.push(cur);
+    }
+
+    return acc;
+  }, []);
+
+  stateRecipes.searchRecipeFilter.push(...uniqueArray);
 };
 
 const createTagFilter = (classe, texte) => {
@@ -104,6 +128,11 @@ const createTagFilter = (classe, texte) => {
   text.innerText = texte;
   close.innerHTML = "<i class='fa-solid fa-circle-xmark'></i>";
   tagContainer.appendChild(div);
+
+  close.style.cursor = "pointer";
+  close.addEventListener("click", () => {
+    div.remove();
+  });
 };
 
 const filterAllIngredients = (recettes) => {
@@ -121,12 +150,11 @@ const filterAllIngredients = (recettes) => {
     let li = document.createElement("li");
     li.innerText = ingredient;
     ul.append(li);
-
     li.style.cursor = "pointer";
 
     li.addEventListener("click", () => {
       allFilter.getFilter.push(li.innerText);
-      createTagFilter("tag_ingred", li.innerText);
+      allFilter.ingredient = li.innerText;
     });
   });
 };
@@ -143,13 +171,13 @@ const allAppliance = (recettes) => {
 
   allAppliances.forEach((appliance) => {
     let li = document.createElement("li");
-    li.innerText = appliance;
+    li.innerText = appliance.toLowerCase();
     ul.append(li);
     li.style.cursor = "pointer";
 
     li.addEventListener("click", () => {
       allFilter.getFilter.push(li.innerText);
-      createTagFilter("tag_appliance", li.innerText);
+      allFilter.appliance = li.innerText;
     });
   });
 };
@@ -173,91 +201,30 @@ const filterAllUstensils = (recettes) => {
     li.style.cursor = "pointer";
 
     li.addEventListener("click", () => {
-      allFilter.getFilter.push(li.innerText);
+      stateRecipes.ustensils = "";
+      stateRecipes.ustensils = li.innerText;
+
       createTagFilter("tag_ustensil", li.innerText);
+
+      const ustensils = filterUstensile(
+        stateRecipes.searchRecipeFilter.length > 0
+          ? stateRecipes.searchRecipeFilter
+          : stateRecipes.recipes,
+        ustensil
+      );
+
+      allCard.innerHTML = "";
+      ustensils.forEach((recette) => {
+        card(recette);
+      });
+
+      nbRecette.innerText = `${ustensils.length} Recettes`;
+      allUl.forEach((ul) => {
+        ul.innerHTML = "";
+      });
+      displayAllInfo(ustensils);
     });
   });
-};
-
-// function to filter the main search ustensile
-const filterUstensile = (recipes, ustensils) => {
-  const getIndex = recipes.map((item) =>
-    item.ustensils
-      .join(" ")
-      .toLowerCase()
-      .split(" ")
-      .filter((item) => item.startsWith(ustensils))
-  );
-
-  const index = getIndex
-    .map((item, index) => item.length > 0 && index)
-    .filter((item) => item !== false);
-
-  const getUstensils = index.map((item) => recipes[item]);
-  return getUstensils;
-};
-
-const filterAll = (array, ingredient, appliance, ustensils) => {
-  const allFilter = [...array, ...ingredient, ...appliance, ...ustensils];
-  const idOccurrences = {};
-
-  allFilter.forEach((obj) => {
-    if (idOccurrences[obj.id]) {
-      idOccurrences[obj.id]++;
-    } else {
-      idOccurrences[obj.id] = 1;
-    }
-  });
-
-  const getId = Object.keys(idOccurrences).filter(
-    (id) => idOccurrences[id] >= 4
-  );
-};
-
-const filterForMainSearchBar = (recipes) => {
-  const name = filterName(recipes);
-  const ingredients = filterIngredients(recipes, searchIngredient);
-  const description = filterDescription(recipes);
-  const appliance = filterAppliances(recipes, searchAppliance);
-  const ustensils = filterUstensile(recipes, searchUstensile);
-  const allFilter = [...name, ...ingredients, ...description];
-  const deleteD = Array.from(new Set(allFilter));
-  filterAll(deleteD, ingredients, appliance, ustensils);
-};
-
-const filterNameAndIngredientAndDescription = (valueUser) => {
-  const name = filterName(
-    allFilter.searchUser.length > 0
-      ? allFilter.searchUser
-      : allFilter.arrayPrincipal,
-    valueUser
-  );
-  const ingredients = filterIngredients(
-    allFilter.searchUser.length > 0
-      ? allFilter.searchUser
-      : allFilter.arrayPrincipal,
-    valueUser
-  );
-  const description = filterDescription(
-    allFilter.searchUser.length > 0
-      ? allFilter.searchUser
-      : allFilter.arrayPrincipal,
-    valueUser
-  );
-
-  const arrayDisplay = [...name, ...ingredients, ...description];
-
-  const uniqueObjects = arrayDisplay.reduce((acc, cur) => {
-    const existingObj = acc.find((obj) => obj.id === cur.id);
-    if (!existingObj) {
-      acc.push(cur);
-    }
-
-    return acc;
-  }, []);
-
-  allFilter.searchUser.push(...uniqueObjects);
-  displayFilterCard(uniqueObjects);
 };
 
 // Function for display all filter
@@ -343,7 +310,6 @@ const card = ({ name, image, description, ingredients, time }) => {
 
 // display filter
 const displayFilterCard = (arrayFilter) => {
-  console.log(arrayFilter);
   allCard.innerHTML = "";
   arrayFilter.map((filter) => {
     return card(filter);
@@ -356,167 +322,165 @@ const displayFilterCard = (arrayFilter) => {
   nbRecette.innerText = `${arrayFilter.length} Recettes`;
 };
 
-// function create tag
-const createTag = (text) => {
-  const container = document.querySelector(".filter_all");
-  const tag = document.createElement("div");
-  const deleteTag = document.createElement("span");
-  tag.innerText = text;
-  container.appendChild(tag);
-  tag.append(deleteTag);
-};
-
 // get value user
 const getForm = (e) => {
   e.preventDefault();
   if (e.target[0].value.length >= 3) {
-    filterNameAndIngredientAndDescription(e.target[0].value);
-  } else {
+    stateRecipes.searchUser.shift();
+    stateRecipes.searchUser.push(e.target[0].value);
+    searchMainBar();
     allCard.innerHTML = "";
-    allFilter.arrayPrincipal.forEach((recette) => {
+    stateRecipes.searchRecipeFilter.forEach((recette) => {
       card(recette);
     });
-    nbRecette.innerText = `${allFilter.arrayPrincipal.length} Recettes`;
+    nbRecette.innerText = `${stateRecipes.searchRecipeFilter.length} Recettes`;
     allUl.forEach((ul) => {
       ul.innerHTML = "";
     });
-    displayAllInfo(allFilter.arrayPrincipal);
+    displayAllInfo(stateRecipes.searchRecipeFilter);
+  } else {
+    stateRecipes.searchUser.shift();
+    allCard.innerHTML = "";
+    stateRecipes.recipes.forEach((recette) => {
+      card(recette);
+    });
+    nbRecette.innerText = `${stateRecipes.recipes.length} Recettes`;
+    allUl.forEach((ul) => {
+      ul.innerHTML = "";
+    });
+    displayAllInfo(stateRecipes.recipes);
   }
 };
 
+form.addEventListener("submit", getForm);
+
 formUstensile.addEventListener("submit", (e) => {
   e.preventDefault();
-  filterUstensile(
-    allFilter.searchUser.length > 0
-      ? allFilter.searchUser
-      : allFilter.arrayPrincipal,
-    e.target[0].value
-  );
+  stateRecipes.ustensils = "";
+  stateRecipes.ustensils = e.target[0].value;
 
-  const search = filterUstensile(
-    allFilter.searchUser.length > 0
-      ? allFilter.searchUser
-      : allFilter.arrayPrincipal,
-    e.target[0].value
-  );
-  allFilter.searchUser.splice(0, allFilter.searchUser.length);
-  allFilter.searchUser.push(...search);
+  if (stateRecipes.ustensils !== "") {
+    if (stateRecipes.searchRecipeFilter.length > 0) {
+      const ustensils = filterUstensile(
+        stateRecipes.searchRecipeFilter,
+        e.target[0].value
+      );
 
-  if (allFilter.searchUser.length > 0) {
-    allCard.innerHTML = "";
-    allFilter.searchUser.forEach((recette) => {
-      card(recette);
-    });
-    nbRecette.innerText = `${allFilter.searchUser.length} Recettes`;
-    allUl.forEach((ul) => {
-      ul.innerHTML = "";
-    });
-    displayAllInfo(allFilter.searchUser);
+      allUl.forEach((ul) => {
+        ul.innerHTML = "";
+      });
+
+      stateRecipes.searchRecipeFilter.shift();
+      stateRecipes.searchRecipeFilter.push(ustensils);
+      displayAllInfo(ustensils, stateRecipes.ustensils);
+    } else {
+      const ustensils = filterUstensile(
+        stateRecipes.recipes,
+        e.target[0].value
+      );
+
+      allUl.forEach((ul) => {
+        ul.innerHTML = "";
+      });
+      displayAllInfo(ustensils, stateRecipes.ustensils);
+    }
   } else {
-    allCard.innerHTML = "";
-    allFilter.arrayPrincipal.forEach((recette) => {
-      card(recette);
-    });
-    nbRecette.innerText = `${allFilter.arrayPrincipal.length} Recettes`;
     allUl.forEach((ul) => {
       ul.innerHTML = "";
     });
-    displayAllInfo(allFilter.arrayPrincipal);
+    displayAllInfo(stateRecipes.recipes);
   }
 });
 
 formAppliance.addEventListener("submit", (e) => {
   e.preventDefault();
-  filterAppliances(
-    allFilter.searchUser.length > 0
-      ? allFilter.searchUser
-      : allFilter.arrayPrincipal,
-    e.target[0].value
-  );
+  stateRecipes.appliance = "";
+  stateRecipes.appliance = e.target[0].value;
 
-  const search = filterAppliances(
-    allFilter.searchUser.length > 0
-      ? allFilter.searchUser
-      : allFilter.arrayPrincipal,
-    e.target[0].value
-  );
-  allFilter.searchUser.splice(0, allFilter.searchUser.length);
-  allFilter.searchUser.push(...search);
+  if (stateRecipes.appliance !== "") {
+    if (stateRecipes.searchRecipeFilter.length > 0) {
+      allCard.innerHTML = "";
+      const appliance = filterAppliances(
+        stateRecipes.searchRecipeFilter,
+        e.target[0].value
+      );
 
-  if (allFilter.searchUser.length > 0) {
-    allCard.innerHTML = "";
-    allFilter.searchUser.forEach((recette) => {
-      card(recette);
-    });
-    nbRecette.innerText = `${allFilter.searchUser.length} Recettes`;
-    allUl.forEach((ul) => {
-      ul.innerHTML = "";
-    });
-    displayAllInfo(allFilter.searchUser);
-  } else {
-    allCard.innerHTML = "";
-    allFilter.arrayPrincipal.forEach((recette) => {
-      card(recette);
-    });
-    nbRecette.innerText = `${allFilter.arrayPrincipal.length} Recettes`;
-    allUl.forEach((ul) => {
-      ul.innerHTML = "";
-    });
-    displayAllInfo(allFilter.arrayPrincipal);
+      appliance.forEach((recette) => {
+        card(recette);
+      });
+      nbRecette.innerText = `${appliance.length} Recettes`;
+      allUl.forEach((ul) => {
+        ul.innerHTML = "";
+      });
+      displayAllInfo(appliance);
+    } else {
+      allCard.innerHTML = "";
+      const appliance = filterIngredients(
+        stateRecipes.appliance,
+        e.target[0].value
+      );
+
+      appliance.forEach((recette) => {
+        card(recette);
+      });
+      nbRecette.innerText = `${appliance.length} Recettes`;
+      allUl.forEach((ul) => {
+        ul.innerHTML = "";
+      });
+      displayAllInfo(appliance);
+    }
   }
 });
 
 formIngredient.addEventListener("submit", (e) => {
   e.preventDefault();
-  filterIngredients(
-    allFilter.searchUser.length > 0
-      ? allFilter.searchUser
-      : allFilter.arrayPrincipal,
-    e.target[0].value
-  );
+  stateRecipes.ingredient = "";
+  stateRecipes.ingredient = e.target[0].value;
 
-  const search = filterIngredients(
-    allFilter.searchUser.length > 0
-      ? allFilter.searchUser
-      : allFilter.arrayPrincipal,
-    e.target[0].value
-  );
-  allFilter.searchUser.splice(0, allFilter.searchUser.length);
-  allFilter.searchUser.push(...search);
+  if (stateRecipes.ingredient !== "") {
+    if (stateRecipes.searchRecipeFilter.length > 0) {
+      allCard.innerHTML = "";
+      const ingredient = filterIngredients(
+        stateRecipes.searchRecipeFilter,
+        e.target[0].value
+      );
 
-  if (allFilter.searchUser.length > 0) {
-    allCard.innerHTML = "";
-    allFilter.searchUser.forEach((recette) => {
-      card(recette);
-    });
-    nbRecette.innerText = `${allFilter.searchUser.length} Recettes`;
-    allUl.forEach((ul) => {
-      ul.innerHTML = "";
-    });
-    displayAllInfo(allFilter.searchUser);
-  } else {
-    allCard.innerHTML = "";
-    allFilter.arrayPrincipal.forEach((recette) => {
-      card(recette);
-    });
-    nbRecette.innerText = `${allFilter.arrayPrincipal.length} Recettes`;
-    allUl.forEach((ul) => {
-      ul.innerHTML = "";
-    });
-    displayAllInfo(allFilter.arrayPrincipal);
+      ingredient.forEach((recette) => {
+        card(recette);
+      });
+      nbRecette.innerText = `${ingredient.length} Recettes`;
+      allUl.forEach((ul) => {
+        ul.innerHTML = "";
+      });
+      displayAllInfo(ingredient);
+    } else {
+      allCard.innerHTML = "";
+      const ingredient = filterIngredients(
+        stateRecipes.recipes,
+        e.target[0].value
+      );
+
+      ingredient.forEach((recette) => {
+        card(recette);
+      });
+      nbRecette.innerText = `${ingredient.length} Recettes`;
+      allUl.forEach((ul) => {
+        ul.innerHTML = "";
+      });
+      displayAllInfo(ingredient);
+    }
   }
 });
 
 const init = async () => {
   const getRecettes = await getData();
-  allFilter.arrayPrincipal.push(...getRecettes);
+  stateRecipes.recipes.push(...getRecettes);
   getRecettes.forEach((recette) => {
     card(recette);
   });
 
   displayAllInfo(getRecettes);
   nbRecette.innerText = `${getRecettes.length} Recettes`;
-  form.addEventListener("submit", getForm);
 };
 
 init();
