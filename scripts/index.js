@@ -297,6 +297,9 @@ const getForm = (e) => {
   stateRecipes.searchBar = e.target[0].value;
 
   arrayFilter();
+  displayAllFilter(getUniqueIngredients, stateRecipes.recipes, "ingredient");
+  displayAllFilter(getUniquesAppliances, stateRecipes.recipes, "appliances");
+  displayAllFilter(getUniqueUstensils, stateRecipes.recipes, "ustensiles");
 };
 
 form.addEventListener("submit", getForm);
