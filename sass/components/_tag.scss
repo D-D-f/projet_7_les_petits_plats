@@ -1,6 +1,7 @@
-.tag_ustensil,
-.tag_appliance,
-.tag_ingred {
+.tag_ustensiles,
+.tag_appliances,
+.tag_ingredient,
+.true {
   display: flex;
   justify-content: space-between;
   background-color: $color-primary;
@@ -15,8 +16,8 @@
   width: 50%;
 }
 
-.tag_ustensil span:first-of-type,
-.tag_appliance span:first-of-type,
-.tag_ingred span:first-of-type {
+.tag_ustensiles span:first-of-type,
+.tag_appliances span:first-of-type,
+.tag_ingredient span:first-of-type {
   margin-right: 50px;
 }
