@@ -43,40 +43,6 @@ form.addEventListener("submit", getForm);
 
 formUstensile.addEventListener("submit", (e) => {
   e.preventDefault();
-  stateRecipes.ustensils = "";
-  stateRecipes.ustensils = e.target[0].value;
-
-  if (stateRecipes.ustensils !== "") {
-    if (stateRecipes.searchRecipeFilter.length > 0) {
-      const ustensils = filterUstensile(
-        stateRecipes.searchRecipeFilter,
-        e.target[0].value
-      );
-
-      allUl.forEach((ul) => {
-        ul.innerHTML = "";
-      });
-
-      stateRecipes.searchRecipeFilter.shift();
-      stateRecipes.searchRecipeFilter.push(ustensils);
-      displayAllInfo(ustensils, stateRecipes.ustensils);
-    } else {
-      const ustensils = filterUstensile(
-        stateRecipes.recipes,
-        e.target[0].value
-      );
-
-      allUl.forEach((ul) => {
-        ul.innerHTML = "";
-      });
-      displayAllInfo(ustensils, stateRecipes.ustensils);
-    }
-  } else {
-    allUl.forEach((ul) => {
-      ul.innerHTML = "";
-    });
-    displayAllInfo(stateRecipes.recipes);
-  }
 });
 
 formAppliance.addEventListener("submit", (e) => {

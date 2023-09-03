@@ -24,6 +24,10 @@ const displayFilter = (array) => {
   ingredients.forEach((element) => {
     const li = document.createElement("li");
     li.innerText = element;
+    if (stateRecipes.ingredient === li.innerText) {
+      li.style.backgroundColor = "#ffd15b";
+      li.style.padding = "10px";
+    }
     ingredient.append(li);
     li.style.cursor = "pointer";
     li.addEventListener("click", () => eventLi(li, "ingredient"));
@@ -31,6 +35,10 @@ const displayFilter = (array) => {
   appliances.forEach((element) => {
     const li = document.createElement("li");
     li.innerText = element;
+    if (stateRecipes.appliances === li.innerText) {
+      li.style.backgroundColor = "#ffd15b";
+      li.style.padding = "10px";
+    }
     appliance.append(li);
     li.style.cursor = "pointer";
     li.addEventListener("click", () => eventLi(li, "appliance"));
@@ -38,6 +46,10 @@ const displayFilter = (array) => {
   ustensiles.forEach((element) => {
     const li = document.createElement("li");
     li.innerText = element;
+    if (stateRecipes.ustensiles === li.innerText) {
+      li.style.backgroundColor = "#ffd15b";
+      li.style.padding = "10px";
+    }
     ustensils.append(li);
     li.style.cursor = "pointer";
     li.addEventListener("click", () => eventLi(li, "ustensil"));
