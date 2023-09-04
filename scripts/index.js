@@ -36,89 +36,32 @@ const getForm = async (e) => {
   stateRecipes.searchBar = e.target[0].value;
   await updateArray();
   displayFilterCard(stateRecipes.recipesFilter);
-  console.log(stateRecipes);
 };
 
 form.addEventListener("submit", getForm);
 
 formUstensile.addEventListener("submit", (e) => {
   e.preventDefault();
+  allUl.forEach((ul) => {
+    ul.innerHTML = "";
+  });
+  filterWords(stateRecipes.recipesFilter, "ustensils", e.target[0].value);
 });
 
 formAppliance.addEventListener("submit", (e) => {
   e.preventDefault();
-  stateRecipes.appliance = "";
-  stateRecipes.appliance = e.target[0].value;
-
-  if (stateRecipes.appliance !== "") {
-    if (stateRecipes.searchRecipeFilter.length > 0) {
-      const appliance = filterUstensile(
-        stateRecipes.searchRecipeFilter,
-        e.target[0].value
-      );
-
-      allUl.forEach((ul) => {
-        ul.innerHTML = "";
-      });
-
-      stateRecipes.searchRecipeFilter.shift();
-      stateRecipes.searchRecipeFilter.push(appliance);
-      displayAllInfo(appliance, stateRecipes.appliance);
-    } else {
-      const appliance = filterUstensile(
-        stateRecipes.appliance,
-        e.target[0].value
-      );
-
-      allUl.forEach((ul) => {
-        ul.innerHTML = "";
-      });
-      displayAllInfo(appliance, stateRecipes.appliance);
-    }
-  } else {
-    allUl.forEach((ul) => {
-      ul.innerHTML = "";
-    });
-    displayAllInfo(stateRecipes.recipes);
-  }
+  allUl.forEach((ul) => {
+    ul.innerHTML = "";
+  });
+  filterWords(stateRecipes.recipesFilter, "appliance", e.target[0].value);
 });
 
 formIngredient.addEventListener("submit", (e) => {
   e.preventDefault();
-  stateRecipes.ingredient = "";
-  stateRecipes.ingredient = e.target[0].value;
-
-  if (stateRecipes.ingredient !== "") {
-    if (stateRecipes.searchRecipeFilter.length > 0) {
-      const ingredient = filterIngredients(
-        stateRecipes.searchRecipeFilter,
-        e.target[0].value
-      );
-
-      allUl.forEach((ul) => {
-        ul.innerHTML = "";
-      });
-
-      stateRecipes.searchRecipeFilter.shift();
-      stateRecipes.searchRecipeFilter.push(ingredient);
-      displayAllInfo(ingredient, stateRecipes.ingredient);
-    } else {
-      const ingredient = filterUstensile(
-        stateRecipes.ingredient,
-        e.target[0].value
-      );
-
-      allUl.forEach((ul) => {
-        ul.innerHTML = "";
-      });
-      displayAllInfo(ingredient, stateRecipes.ingredient);
-    }
-  } else {
-    allUl.forEach((ul) => {
-      ul.innerHTML = "";
-    });
-    displayAllInfo(stateRecipes.recipes);
-  }
+  allUl.forEach((ul) => {
+    ul.innerHTML = "";
+  });
+  filterWords(stateRecipes.recipesFilter, "ingredient", e.target[0].value);
 });
 
 const init = async () => {
