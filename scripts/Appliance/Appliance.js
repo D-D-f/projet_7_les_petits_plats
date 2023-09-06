@@ -1,12 +1,13 @@
-const filterAppliances = (recipes, wordUser) => {
-  if (wordUser !== "") {
-    const filterAppliance = recipes.filter((elem) => {
-      return elem.appliance.toLowerCase().includes(wordUser.toLowerCase());
-    });
-    return filterAppliance;
-  } else {
-    return [];
+const filterAppliances = (recipe, wordUser) => {
+  let tableau = [];
+  for (const appli of recipe) {
+    const verif = appli.appliance.toLowerCase().includes(wordUser);
+    if (verif === true) {
+      tableau.push(appli);
+    }
   }
+
+  return tableau;
 };
 
 const getUniquesAppliances = (recipes) => {

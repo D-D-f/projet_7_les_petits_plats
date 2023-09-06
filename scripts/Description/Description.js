@@ -1,11 +1,10 @@
-const filterDescription = (recipes, wordUser) => {
-  if (wordUser !== "") {
-    const getDescription = recipes.filter((item) =>
-      item.description.toLowerCase().includes(wordUser.toLowerCase())
-    );
-
-    return getDescription;
-  } else {
-    return [];
+const filterDescription = (recipe, wordUser) => {
+  let descriptions = [];
+  for (const descri of recipe) {
+    if (descri.description.includes(wordUser)) {
+      descriptions.push(descri);
+    }
   }
+
+  return descriptions;
 };

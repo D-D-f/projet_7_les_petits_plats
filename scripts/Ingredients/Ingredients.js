@@ -1,15 +1,31 @@
-const filterIngredients = (recipes, wordUser) => {
-  if (wordUser !== "") {
-    const recipesWithUserIngredient = recipes.filter((recipe) => {
-      return recipe.ingredients.some((item) =>
-        item.ingredient.toLowerCase().includes(wordUser.toLowerCase())
-      );
-    });
-
-    return recipesWithUserIngredient;
-  } else {
-    return [];
+const filterIngredients = (recipe, wordUser) => {
+  let firstFilter = [];
+  let getObj = [];
+  let result = [];
+  for (const recip of recipe) {
+    firstFilter.push(...recip.ingredients);
   }
+
+  for (const test of firstFilter) {
+    if (test.ingredient.toLowerCase().includes(wordUser.toLowerCase())) {
+      getObj.push(test);
+    }
+  }
+
+  for (const np of recipe) {
+    const verif = np.ingredients;
+    let i = 0;
+    while (i < getObj.length) {
+      if (verif.includes(getObj[i]) === true) {
+        if (!result.includes(np)) {
+          result.push(np);
+        }
+      }
+      i++;
+    }
+  }
+
+  return result;
 };
 
 const getUniqueIngredients = (recipes) => {

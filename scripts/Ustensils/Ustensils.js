@@ -1,15 +1,13 @@
-const filterUstensile = (recipes, wordUser) => {
-  if (wordUser !== "") {
-    const recipesWithUserUstenfils = recipes.filter((recipe) => {
-      return recipe.ustensils.some((item) =>
-        item.toLowerCase().includes(wordUser)
-      );
-    });
-
-    return recipesWithUserUstenfils;
-  } else {
-    return [];
+const filterUstensile = (recipe, wordUser) => {
+  const result = [];
+  for (const recip of recipe) {
+    for (const ustensil of recip.ustensils) {
+      if (ustensil.toLowerCase().includes(wordUser.toLowerCase())) {
+        result.push(recip);
+      }
+    }
   }
+  return result;
 };
 
 const getUniqueUstensils = (recipes) => {

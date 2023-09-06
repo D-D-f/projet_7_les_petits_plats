@@ -1,10 +1,10 @@
-const filterName = (recipes, wordUser) => {
-  if (wordUser !== "") {
-    const getName = recipes.filter((recipe) =>
-      recipe.name.toLowerCase().includes(wordUser.toLowerCase())
-    );
-    return getName;
-  } else {
-    return [];
+const filterName = (recipe, wordUser) => {
+  let names = [];
+  for (const name of recipe) {
+    if (name.name.toLowerCase().includes(wordUser)) {
+      names.push(name);
+    }
   }
+
+  return names;
 };
