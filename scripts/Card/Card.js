@@ -36,7 +36,7 @@ const card = ({ name, image, description, ingredients, time }) => {
   containerRecette.append(rowRecette);
   article.classList.add("col-4", "mb-4", "position-relative");
   article.append(times, divCard);
-  divCard.classList.add("card", "p-0");
+  divCard.classList.add("card", "p-0", "border-0");
   img.classList.add("card-img-top", "w-100", "image");
   divBody.classList.add("card-body", "m-2");
   section.append(article);
