@@ -21,7 +21,7 @@ Vous devez développer l'intégralité du visuel de l'application ainsi que les 
 
 <p align="center">
   <a href="https://skillicons.dev">
-    <img src="https://skillicons.dev/icons?i=bootstrap,css,figma,github,html,js,vercel" />
+    <img src="https://skillicons.dev/icons?i=bootstrap,css,figma,github,html,js" />
   </a>
 </p>
 
