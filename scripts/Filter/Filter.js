@@ -24,9 +24,9 @@ const displayFilter = (array) => {
   ingredients.forEach((element) => {
     const li = document.createElement("li");
     li.innerText = element;
+    li.style.padding = "5px 10px";
     if (stateRecipes.ingredient === li.innerText) {
       li.style.backgroundColor = "#ffd15b";
-      li.style.padding = "10px";
     }
     ingredient.append(li);
     li.style.cursor = "pointer";
@@ -35,9 +35,9 @@ const displayFilter = (array) => {
   appliances.forEach((element) => {
     const li = document.createElement("li");
     li.innerText = element;
+    li.style.padding = "5px 10px";
     if (stateRecipes.appliances === li.innerText) {
       li.style.backgroundColor = "#ffd15b";
-      li.style.padding = "10px";
     }
     appliance.append(li);
     li.style.cursor = "pointer";
@@ -46,9 +46,9 @@ const displayFilter = (array) => {
   ustensiles.forEach((element) => {
     const li = document.createElement("li");
     li.innerText = element;
+    li.style.padding = "5px 10px";
     if (stateRecipes.ustensiles === li.innerText) {
       li.style.backgroundColor = "#ffd15b";
-      li.style.padding = "10px";
     }
     ustensils.append(li);
     li.style.cursor = "pointer";
