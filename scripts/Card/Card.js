@@ -62,7 +62,6 @@ const card = ({ name, image, description, ingredients, time }) => {
     "z-1",
     "time"
   );
-
   ingredients.forEach((item) => {
     createDivRecette(rowRecette, item.ingredient, item.quantity, item.unit);
   });

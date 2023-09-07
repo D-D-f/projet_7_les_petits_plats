@@ -10,30 +10,30 @@ const updateArray = async () => {
     stateRecipes.recipesFilter.push(...search);
   }
 
-  if (stateRecipes.ingredient !== "") {
-    const ingredient = filterIngredients(
-      stateRecipes.recipesFilter,
-      stateRecipes.ingredient
+  if (stateRecipes.ingredient.length > 0) {
+    getSearchIngredients(stateRecipes.recipesFilter, stateRecipes.ingredient);
+  } else {
+    stateRecipes.recipesFilterIngredient.splice(
+      0,
+      stateRecipes.recipesFilterIngredient.length
     );
-    stateRecipes.recipesFilter.splice(0, stateRecipes.recipesFilter.length);
-    stateRecipes.recipesFilter.push(...ingredient);
   }
 
-  if (stateRecipes.appliances !== "") {
-    const appliance = filterAppliances(
-      stateRecipes.recipesFilter,
-      stateRecipes.appliances
+  if (stateRecipes.appliances.length > 0) {
+    getSearchAppliance(stateRecipes.recipesFilter, stateRecipes.appliances);
+  } else {
+    stateRecipes.recipesFilterAppliances.splice(
+      0,
+      stateRecipes.recipesFilterAppliances.length
     );
-    stateRecipes.recipesFilter.splice(0, stateRecipes.recipesFilter.length);
-    stateRecipes.recipesFilter.push(...appliance);
   }
 
-  if (stateRecipes.ustensiles !== "") {
-    const ustensils = filterUstensile(
-      stateRecipes.recipesFilter,
-      stateRecipes.ustensiles
+  if (stateRecipes.ustensiles.length > 0) {
+    getSearchUstensils(stateRecipes.recipesFilter, stateRecipes.ustensiles);
+  } else {
+    stateRecipes.recipesFilterUstensiles.splice(
+      0,
+      stateRecipes.recipesFilterUstensiles.length
     );
-    stateRecipes.recipesFilter.splice(0, stateRecipes.recipesFilter.length);
-    stateRecipes.recipesFilter.push(...ustensils);
   }
 };

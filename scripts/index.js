@@ -9,10 +9,13 @@ const tagContainer = document.querySelector(".filter_all");
 
 const stateRecipes = {
   recipesFilter: [],
+  recipesFilterIngredient: [],
+  recipesFilterAppliances: [],
+  recipesFilterUstensiles: [],
   searchBar: "",
-  ingredient: "",
-  appliances: "",
-  ustensiles: "",
+  ingredient: [],
+  appliances: [],
+  ustensiles: [],
 };
 
 const getData = async () => {
