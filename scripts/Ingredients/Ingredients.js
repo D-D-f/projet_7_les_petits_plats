@@ -16,7 +16,7 @@ const filterIngredients = (recipe, wordUser) => {
     const verif = np.ingredients;
     let i = 0;
     while (i < getObj.length) {
-      if (verif.includes(getObj[i]) === true) {
+      if (verif.includes(getObj[i])) {
         if (!result.includes(np)) {
           result.push(np);
         }
