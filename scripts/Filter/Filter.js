@@ -1,16 +1,55 @@
 const eventLi = async (elem, nameFilter) => {
   if (nameFilter === "ingredient") {
-    stateRecipes.ingredient = elem.innerText;
-    createTagFilter(elem.innerText, "ingredient");
+    if (!stateRecipes.ingredient.includes(elem)) {
+      stateRecipes.ingredient.push(elem.innerText);
+      createTagFilter(elem.innerText, "ingredient");
+    }
   } else if (nameFilter === "appliance") {
-    stateRecipes.appliances = elem.innerText;
-    createTagFilter(elem.innerText, "appliances");
+    if (!stateRecipes.appliances.includes(elem)) {
+      stateRecipes.appliances.push(elem.innerText);
+      createTagFilter(elem.innerText, "appliances");
+    }
   } else if (nameFilter === "ustensil") {
-    stateRecipes.ustensiles = elem.innerText;
-    createTagFilter(elem.innerText, "ustensiles");
+    if (!stateRecipes.ustensiles.includes(elem)) {
+      stateRecipes.ustensiles.push(elem.innerText);
+      createTagFilter(elem.innerText, "ustensiles");
+    }
   }
   await updateArray();
-  displayFilterCard(stateRecipes.recipesFilter);
+  const fusionArray = [
+    ...stateRecipes.recipesFilterAppliances,
+    ...stateRecipes.recipesFilterIngredient,
+    ...stateRecipes.recipesFilterUstensiles,
+  ];
+  const idCounts = {};
+  const duplicateObjects = [];
+
+  fusionArray.forEach((element) => {
+    const id = element.id;
+    if (idCounts[id] === undefined) {
+      idCounts[id] = 1;
+    } else {
+      idCounts[id]++;
+    }
+  });
+
+  Object.keys(idCounts).forEach((id) => {
+    if (idCounts[id] > 1) {
+      const duplicates = fusionArray.filter(
+        (element) => element.id === parseInt(id)
+      );
+      duplicateObjects.push(...duplicates);
+    }
+  });
+
+  const displayArray = duplicateObjects.reduce((acc, curr) => {
+    if (!acc.includes(curr)) {
+      acc.push(curr);
+    }
+    return acc;
+  }, []);
+
+  displayFilterCard(displayArray.length > 0 ? displayArray : fusionArray);
 };
 
 const displayFilter = (array) => {
@@ -24,9 +63,9 @@ const displayFilter = (array) => {
   ingredients.forEach((element) => {
     const li = document.createElement("li");
     li.innerText = element;
-    if (stateRecipes.ingredient === li.innerText) {
+    li.style.padding = "5px 10px";
+    if (stateRecipes.ingredient.includes(li.innerText)) {
       li.style.backgroundColor = "#ffd15b";
-      li.style.padding = "10px";
     }
     ingredient.append(li);
     li.style.cursor = "pointer";
@@ -35,9 +74,9 @@ const displayFilter = (array) => {
   appliances.forEach((element) => {
     const li = document.createElement("li");
     li.innerText = element;
+    li.style.padding = "5px 10px";
     if (stateRecipes.appliances === li.innerText) {
       li.style.backgroundColor = "#ffd15b";
-      li.style.padding = "10px";
     }
     appliance.append(li);
     li.style.cursor = "pointer";
@@ -46,9 +85,9 @@ const displayFilter = (array) => {
   ustensiles.forEach((element) => {
     const li = document.createElement("li");
     li.innerText = element;
+    li.style.padding = "5px 10px";
     if (stateRecipes.ustensiles === li.innerText) {
       li.style.backgroundColor = "#ffd15b";
-      li.style.padding = "10px";
     }
     ustensils.append(li);
     li.style.cursor = "pointer";

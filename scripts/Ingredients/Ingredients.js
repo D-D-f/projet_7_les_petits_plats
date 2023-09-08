@@ -28,6 +28,28 @@ const filterIngredients = (recipe, wordUser) => {
   return result;
 };
 
+const getSearchIngredients = (recipes, wordUser) => {
+  let filteredRecipes = [...recipes];
+
+  wordUser.forEach((word) => {
+    if (word.trim() !== "") {
+      const currentFilteredRecipes = filteredRecipes.filter((recipe) => {
+        return recipe.ingredients.some((item) =>
+          item.ingredient.toLowerCase().includes(word.toLowerCase())
+        );
+      });
+
+      filteredRecipes = currentFilteredRecipes;
+    }
+  });
+  stateRecipes.recipesFilterIngredient.splice(
+    0,
+    stateRecipes.recipesFilterIngredient.length
+  );
+  stateRecipes.recipesFilterIngredient.push(...filteredRecipes);
+  return filteredRecipes.length > 0 ? filteredRecipes : [];
+};
+
 const getUniqueIngredients = (recipes) => {
   const getIngredients = recipes
     .flatMap((ingredient) => {

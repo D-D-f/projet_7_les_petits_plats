@@ -10,6 +10,26 @@ const filterAppliances = (recipe, wordUser) => {
   return tableau;
 };
 
+const getSearchAppliance = (recipes, wordUser) => {
+  let filteredRecipes = [...recipes];
+
+  wordUser.forEach((word) => {
+    if (word.trim() !== "") {
+      const currentFilteredRecipes = recipes.filter((elem) => {
+        return elem.appliance.toLowerCase().includes(word.toLowerCase());
+      });
+
+      filteredRecipes = currentFilteredRecipes;
+    }
+  });
+  stateRecipes.recipesFilterAppliances.splice(
+    0,
+    stateRecipes.recipesFilterAppliances.length
+  );
+  stateRecipes.recipesFilterAppliances.push(...filteredRecipes);
+  return filteredRecipes.length > 0 ? filteredRecipes : [];
+};
+
 const getUniquesAppliances = (recipes) => {
   const getAppliance = recipes
     .flatMap((appliance) => {

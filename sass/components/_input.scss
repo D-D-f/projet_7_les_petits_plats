@@ -1,7 +1,7 @@
-.header form {
+.header #form_header {
   width: 100%;
 
-  label {
+  .header-label {
     width: 70%;
     position: relative;
 
@@ -37,5 +37,48 @@
     position: relative;
     left: -60px;
     cursor: pointer;
+  }
+}
+
+#ingredients,
+#appliance,
+#ustensile {
+  &::-webkit-search-cancel-button {
+    -webkit-appearance: none;
+    width: 20px;
+    height: 20px;
+    background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%23777'><path d='M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z'/></svg>");
+    position: relative;
+    left: -15px;
+    cursor: pointer;
+  }
+}
+
+.mini_search {
+  .label-minisearch {
+    display: flex;
+    justify-content: center;
+    width: 100%;
+    position: relative;
+
+    .loupe {
+      content: "";
+      position: absolute;
+      right: 35px;
+      top: 11px;
+      background-image: url(./assets/logo/iconSearch.svg);
+      border-radius: 11px;
+      background-repeat: no-repeat;
+      background-position: center;
+      cursor: pointer;
+      width: 15px;
+      height: 15px;
+    }
+    .input_filter {
+      width: 100%;
+      border: 1px solid #c6c6c6;
+      outline: none;
+      padding: 5px;
+    }
   }
 }

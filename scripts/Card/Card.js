@@ -71,6 +71,7 @@ const card = ({ name, image, description, ingredients, time }) => {
 };
 
 const displayFilterCard = (arrayFilter) => {
+  const allUl = document.querySelectorAll(".ul_list");
   allCard.innerHTML = "";
   arrayFilter.forEach((filter) => {
     card(filter);
