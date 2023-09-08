@@ -4,6 +4,7 @@ const filterWords = (recipes, name, value) => {
   const ustensils = document.querySelector(".ustensiles");
 
   if (name === "ustensils") {
+    ustensils.innerHTML = "";
     const ustensil = getUniqueUstensils(recipes).filter((usten) =>
       usten.includes(value)
     );
@@ -20,6 +21,7 @@ const filterWords = (recipes, name, value) => {
       li.addEventListener("click", () => eventLi(li, "ustensil"));
     });
   } else if (name === "appliance") {
+    appliance.innerHTML = "";
     const appliances = getUniquesAppliances(recipes).filter((appli) =>
       appli.includes(value)
     );
@@ -36,6 +38,7 @@ const filterWords = (recipes, name, value) => {
       li.addEventListener("click", () => eventLi(li, "appliance"));
     });
   } else if (name === "ingredient") {
+    ingredient.innerHTML = "";
     const ingredients = getUniqueIngredients(recipes).filter((ingred) =>
       ingred.includes(value)
     );

@@ -1,7 +1,6 @@
 const form = document.querySelector("#form_header");
 const nbRecette = document.querySelector(".nbRecette");
 const allCard = document.querySelector(".allCard > .row");
-const allUl = document.querySelectorAll(".ul_list");
 const formUstensile = document.querySelector("#form_ustensile");
 const formAppliance = document.querySelector("#form_appliance");
 const formIngredient = document.querySelector("#form_ingredient");
@@ -46,25 +45,17 @@ form.addEventListener("submit", getForm);
 
 formUstensile.addEventListener("submit", (e) => {
   e.preventDefault();
-  allUl.forEach((ul) => {
-    ul.innerHTML = "";
-  });
+
   filterWords(stateRecipes.recipesFilter, "ustensils", e.target[0].value);
 });
 
 formAppliance.addEventListener("submit", (e) => {
   e.preventDefault();
-  allUl.forEach((ul) => {
-    ul.innerHTML = "";
-  });
   filterWords(stateRecipes.recipesFilter, "appliance", e.target[0].value);
 });
 
 formIngredient.addEventListener("submit", (e) => {
   e.preventDefault();
-  allUl.forEach((ul) => {
-    ul.innerHTML = "";
-  });
   filterWords(stateRecipes.recipesFilter, "ingredient", e.target[0].value);
 });
 
