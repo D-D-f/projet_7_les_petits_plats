@@ -6,6 +6,7 @@ const formUstensile = document.querySelector("#form_ustensile");
 const formAppliance = document.querySelector("#form_appliance");
 const formIngredient = document.querySelector("#form_ingredient");
 const tagContainer = document.querySelector(".filter_all");
+const deleteBorder = document.querySelectorAll(".accordion-button");
 
 const stateRecipes = {
   recipesFilter: [],
@@ -66,6 +67,13 @@ formIngredient.addEventListener("submit", (e) => {
   });
   filterWords(stateRecipes.recipesFilter, "ingredient", e.target[0].value);
 });
+
+for (const border of deleteBorder) {
+  border.addEventListener("click", () => {
+    border.style.border = "none";
+    border.style.boxShadow = "none";
+  });
+}
 
 const init = async () => {
   const getRecettes = await getData();

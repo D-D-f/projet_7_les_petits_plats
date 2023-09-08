@@ -35,7 +35,7 @@
           <span>DU QUOTIDIEN,SIMPLES ET DÉLICIEUSES</span>
         </h2>
         <form id="form_header" class="d-flex flex-column align-items-center">
-          <label for="filter">
+          <label class="header-label" for="filter">
             <input
               class="input_header p-4 rounded-3 fs-6"
               type="search"
@@ -74,15 +74,23 @@
                 >
                   <div class="accordion-body p-0">
                     <form
+                      class="mini_search"
                       id="form_ingredient"
                       class="input_search d-flex justify-content-center mt-4"
                     >
-                      <input
-                        class="w-75 m-auto"
-                        type="search"
-                        name="ingredients"
-                        id="ingredients"
-                      />
+                      <label class="label-minisearch" for="ingredients">
+                        <input
+                          class="w-75 input_filter"
+                          type="search"
+                          name="ingredients"
+                          id="ingredients"
+                        />
+                        <img
+                          class="loupe"
+                          src="/assets/logo/iconLoupe.svg"
+                          alt="icon search"
+                        />
+                      </label>
                     </form>
                     <ul class="ul_list ingredient"></ul>
                   </div>
@@ -113,15 +121,23 @@
                 >
                   <div class="accordion-body p-0">
                     <form
+                      class="mini_search"
                       id="form_appliance"
                       class="input_search d-flex justify-content-center mt-4"
                     >
-                      <input
-                        class="w-75"
-                        type="search"
-                        name="appliance"
-                        id="appliance"
-                      />
+                      <label class="label-minisearch" for="appliance">
+                        <input
+                          class="w-75 input_filter"
+                          type="search"
+                          name="appliance"
+                          id="appliance"
+                        />
+                        <img
+                          class="loupe"
+                          src="/assets/logo/iconLoupe.svg"
+                          alt="icon search"
+                        />
+                      </label>
                     </form>
                     <ul class="ul_list appliances"></ul>
                   </div>
@@ -152,15 +168,23 @@
                 >
                   <div class="accordion-body p-0">
                     <form
+                      class="mini_search"
                       id="form_ustensile"
                       class="input_search d-flex justify-content-center mt-4"
                     >
-                      <input
-                        class="w-75"
-                        type="search"
-                        name="ustensile"
-                        id="ustensile"
-                      />
+                      <label class="label-minisearch" for="ustensile">
+                        <input
+                          class="w-75 input_filter"
+                          type="search"
+                          name="ustensile"
+                          id="ustensile"
+                        />
+                        <img
+                          class="loupe"
+                          src="/assets/logo/iconLoupe.svg"
+                          alt="icon search"
+                        />
+                      </label>
                     </form>
                     <ul class="ul_list ustensiles"></ul>
                   </div>
