@@ -52,6 +52,8 @@ const eventLi = async (elem, nameFilter) => {
   displayFilterCard(displayArray.length > 0 ? displayArray : fusionArray);
 };
 
+// functio which contains the events at the click of the filters and display filter
+
 const displayFilter = (array) => {
   const ingredient = document.querySelector(`.ingredient`);
   const appliance = document.querySelector(".appliances");
@@ -94,3 +96,5 @@ const displayFilter = (array) => {
     li.addEventListener("click", () => eventLi(li, "ustensil"));
   });
 };
+
+// function for display all ingredient, ustensils and appliance

@@ -37,3 +37,5 @@ const updateArray = async () => {
     );
   }
 };
+
+// function to put the new data into the staterecipes object
