@@ -19,4 +19,4 @@ const searchMainBar = (array) => {
   return allArray;
 };
 
-// Permet de faire la recherche sur la search bar principal
+// Function that allows you to search with the main field

@@ -12,6 +12,8 @@ const filterIngredients = (recipes, wordUser) => {
   }
 };
 
+// Function which returns the array which corresponds to the ingredient as a parameter
+
 const getSearchIngredients = (recipes, wordUser) => {
   let filteredRecipes = [...recipes];
 
@@ -34,6 +36,8 @@ const getSearchIngredients = (recipes, wordUser) => {
   return filteredRecipes.length > 0 ? filteredRecipes : [];
 };
 
+// The function allows you to retrieve all the ingredients contained in the wordUser array
+
 const getUniqueIngredients = (recipes) => {
   const getIngredients = recipes
     .flatMap((ingredient) => {
@@ -49,3 +53,5 @@ const getUniqueIngredients = (recipes) => {
     }, []);
   return getIngredients;
 };
+
+// Function to retrieve ingredients without duplicates

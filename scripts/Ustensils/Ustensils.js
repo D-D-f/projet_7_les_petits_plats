@@ -12,6 +12,8 @@ const filterUstensile = (recipes, wordUser) => {
   }
 };
 
+// Function which returns the array which corresponds to the ustensils as a parameter
+
 const getSearchUstensils = (recipes, wordUser) => {
   let filteredRecipes = [...recipes];
 
@@ -34,6 +36,8 @@ const getSearchUstensils = (recipes, wordUser) => {
   return filteredRecipes.length > 0 ? filteredRecipes : [];
 };
 
+// The function allows you to retrieve all the ustensils contained in the wordUser array
+
 const getUniqueUstensils = (recipes) => {
   const getUstensils = recipes
     .flatMap((ingredient) => {
@@ -47,3 +51,5 @@ const getUniqueUstensils = (recipes) => {
     }, []);
   return getUstensils;
 };
+
+// Function to retrieve ustensils without duplicates

@@ -9,6 +9,8 @@ const filterAppliances = (recipes, wordUser) => {
   }
 };
 
+// Function which returns the array which corresponds to the appliance as a parameter
+
 const getSearchAppliance = (recipes, wordUser) => {
   let filteredRecipes = [...recipes];
 
@@ -29,6 +31,8 @@ const getSearchAppliance = (recipes, wordUser) => {
   return filteredRecipes.length > 0 ? filteredRecipes : [];
 };
 
+// The function allows you to retrieve all the appliance contained in the wordUser array
+
 const getUniquesAppliances = (recipes) => {
   const getAppliance = recipes
     .flatMap((appliance) => {
@@ -42,3 +46,5 @@ const getUniquesAppliances = (recipes) => {
     }, []);
   return getAppliance;
 };
+
+// Function to retrieve appliance without duplicates

@@ -9,3 +9,5 @@ const filterDescription = (recipes, wordUser) => {
     return [];
   }
 };
+
+// Retrieves objects that have part of the word given as a parameter in the descriptions
