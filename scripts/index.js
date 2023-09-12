@@ -41,6 +41,10 @@ const getForm = async (e) => {
     await updateArray();
     displayFilterCard(stateRecipes.recipesFilter);
   }
+  if (stateRecipes.searchBar.length === 0) {
+    await updateArray();
+    displayFilterCard(stateRecipes.recipesFilter);
+  }
 };
 
 form.addEventListener("submit", getForm);
