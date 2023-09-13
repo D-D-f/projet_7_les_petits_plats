@@ -7,6 +7,7 @@ const formIngredient = document.querySelector("#form_ingredient");
 const tagContainer = document.querySelector(".filter_all");
 const deleteBorder = document.querySelectorAll(".accordion-button");
 
+// The object that manages each element of the filter
 const stateRecipes = {
   recipesFilter: [],
   recipesFilterIngredient: [],
@@ -18,6 +19,7 @@ const stateRecipes = {
   ustensiles: [],
 };
 
+// Get recipes
 const getData = async () => {
   try {
     const requete = await fetch("./public/recettes.json", {
@@ -33,6 +35,7 @@ const getData = async () => {
   }
 };
 
+// Sends to the stateRecipes object, the value of the user to filter the recipes
 const getForm = async (e) => {
   e.preventDefault();
   stateRecipes.searchBar = "";
