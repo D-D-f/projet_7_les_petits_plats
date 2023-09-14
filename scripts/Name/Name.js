@@ -8,3 +8,5 @@ const filterName = (recipes, wordUser) => {
     return [];
   }
 };
+
+// Function to filter the table according to the names
