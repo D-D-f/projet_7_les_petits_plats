@@ -6,6 +6,7 @@ const formAppliance = document.querySelector("#form_appliance");
 const formIngredient = document.querySelector("#form_ingredient");
 const tagContainer = document.querySelector(".filter_all");
 const deleteBorder = document.querySelectorAll(".accordion-button");
+const msgEmptyArray = document.querySelector(".msgArrEmpty");
 
 // The object that manages each element of the filter
 const stateRecipes = {
@@ -47,6 +48,10 @@ const getForm = async (e) => {
   if (stateRecipes.searchBar.length === 0) {
     await updateArray();
     displayFilterCard(stateRecipes.recipesFilter);
+  }
+
+  if (stateRecipes.recipesFilter.length === 0) {
+    msgEmptyArray.textContent = `Aucune recette ne contient ${e.target[0].value} vous pouvez chercher "tarte aux pommes", "poisson", etc.`;
   }
 };
 
