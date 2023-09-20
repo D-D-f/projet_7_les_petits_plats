@@ -41,7 +41,8 @@ const getData = async () => {
 const getForm = async (e) => {
   e.preventDefault();
   stateRecipes.searchBar = "";
-  stateRecipes.searchBar = e.target[0].value;
+  stateRecipes.searchBar = e.target.value;
+
   if (stateRecipes.searchBar.length > 2) {
     await updateArray();
     displayFilterCard(stateRecipes.recipesFilter);
@@ -52,26 +53,26 @@ const getForm = async (e) => {
   }
 
   if (stateRecipes.recipesFilter.length === 0) {
-    msgEmptyArray.textContent = `Aucune recette ne contient ${e.target[0].value} vous pouvez chercher "tarte aux pommes", "poisson", etc.`;
+    msgEmptyArray.textContent = `Aucune recette ne contient ${e.target.value} vous pouvez chercher "tarte aux pommes", "poisson", etc.`;
   }
 };
 
-form.addEventListener("submit", getForm);
+form.addEventListener("input", getForm);
 
-formUstensile.addEventListener("submit", (e) => {
+formUstensile.addEventListener("input", (e) => {
   e.preventDefault();
 
-  filterWords(stateRecipes.recipesFilter, "ustensils", e.target[0].value);
+  filterWords(stateRecipes.recipesFilter, "ustensils", e.target.value);
 });
 
-formAppliance.addEventListener("submit", (e) => {
+formAppliance.addEventListener("input", (e) => {
   e.preventDefault();
-  filterWords(stateRecipes.recipesFilter, "appliance", e.target[0].value);
+  filterWords(stateRecipes.recipesFilter, "appliance", e.target.value);
 });
 
-formIngredient.addEventListener("submit", (e) => {
+formIngredient.addEventListener("input", (e) => {
   e.preventDefault();
-  filterWords(stateRecipes.recipesFilter, "ingredient", e.target[0].value);
+  filterWords(stateRecipes.recipesFilter, "ingredient", e.target.value);
 });
 
 for (const border of deleteBorder) {
