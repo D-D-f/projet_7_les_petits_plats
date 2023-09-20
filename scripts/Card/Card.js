@@ -1,3 +1,4 @@
+// @ts-nocheck
 const createDivRecette = (parent, ingredient, quantity, unit) => {
   const block = document.createElement("div");
   const pIngred = document.createElement("p");

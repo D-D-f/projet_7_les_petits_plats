@@ -1,3 +1,4 @@
+// @ts-nocheck
 const filterIngredients = (recipe, wordUser) => {
   let firstFilter = [];
   let getObj = [];

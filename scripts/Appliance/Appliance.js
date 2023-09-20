@@ -1,3 +1,4 @@
+// @ts-nocheck
 const filterAppliances = (recipe, wordUser) => {
   let tableau = [];
   for (const appli of recipe) {
