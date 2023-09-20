@@ -1,3 +1,4 @@
+// @ts-nocheck
 const updateArray = async () => {
   const allArray = await getData();
   stateRecipes.recipesFilter.splice(0, stateRecipes.recipesFilter.length);

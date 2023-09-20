@@ -1,3 +1,4 @@
+// @ts-nocheck
 const form = document.querySelector("#form_header");
 const nbRecette = document.querySelector(".nbRecette");
 const allCard = document.querySelector(".allCard > .row");

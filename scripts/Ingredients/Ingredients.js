@@ -1,3 +1,4 @@
+// @ts-nocheck
 const filterIngredients = (recipes, wordUser) => {
   if (wordUser !== "") {
     const recipesWithUserIngredient = recipes.filter((recipe) => {

@@ -1,3 +1,4 @@
+// @ts-nocheck
 const eventLi = async (elem, nameFilter) => {
   if (nameFilter === "ingredient") {
     if (!stateRecipes.ingredient.includes(elem)) {

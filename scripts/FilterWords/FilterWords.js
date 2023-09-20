@@ -1,3 +1,4 @@
+// @ts-nocheck
 const filterWords = (recipes, name, value) => {
   const ingredient = document.querySelector(`.ingredient`);
   const appliance = document.querySelector(".appliances");
