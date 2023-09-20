@@ -44,10 +44,12 @@ const getForm = async (e) => {
   stateRecipes.searchBar = e.target.value;
 
   if (stateRecipes.searchBar.length > 2) {
+    msgEmptyArray.textContent = "";
     await updateArray();
     displayFilterCard(stateRecipes.recipesFilter);
   }
   if (stateRecipes.searchBar.length === 0) {
+    msgEmptyArray.textContent = "";
     await updateArray();
     displayFilterCard(stateRecipes.recipesFilter);
   }
