@@ -1,3 +1,4 @@
+// @ts-nocheck
 const form = document.querySelector("#form_header");
 const nbRecette = document.querySelector(".nbRecette");
 const allCard = document.querySelector(".allCard > .row");
@@ -6,6 +7,7 @@ const formAppliance = document.querySelector("#form_appliance");
 const formIngredient = document.querySelector("#form_ingredient");
 const tagContainer = document.querySelector(".filter_all");
 const deleteBorder = document.querySelectorAll(".accordion-button");
+const msgEmptyArray = document.querySelector(".msgArrEmpty");
 
 const stateRecipes = {
   recipesFilter: [],
@@ -36,27 +38,40 @@ const getData = async () => {
 const getForm = async (e) => {
   e.preventDefault();
   stateRecipes.searchBar = "";
-  stateRecipes.searchBar = e.target[0].value;
-  await updateArray();
-  displayFilterCard(stateRecipes.recipesFilter);
+  stateRecipes.searchBar = e.target.value;
+
+  if (stateRecipes.searchBar.length > 2) {
+    msgEmptyArray.textContent = "";
+    await updateArray();
+    displayFilterCard(stateRecipes.recipesFilter);
+  }
+  if (stateRecipes.searchBar.length === 0) {
+    msgEmptyArray.textContent = "";
+    await updateArray();
+    displayFilterCard(stateRecipes.recipesFilter);
+  }
+
+  if (stateRecipes.recipesFilter.length === 0) {
+    msgEmptyArray.textContent = `Aucune recette ne contient ${e.target.value} vous pouvez chercher "tarte aux pommes", "poisson", etc.`;
+  }
 };
 
-form.addEventListener("submit", getForm);
+form.addEventListener("input", getForm);
 
-formUstensile.addEventListener("submit", (e) => {
+formUstensile.addEventListener("input", (e) => {
   e.preventDefault();
 
-  filterWords(stateRecipes.recipesFilter, "ustensils", e.target[0].value);
+  filterWords(stateRecipes.recipesFilter, "ustensils", e.target.value);
 });
 
-formAppliance.addEventListener("submit", (e) => {
+formAppliance.addEventListener("input", (e) => {
   e.preventDefault();
-  filterWords(stateRecipes.recipesFilter, "appliance", e.target[0].value);
+  filterWords(stateRecipes.recipesFilter, "appliance", e.target.value);
 });
 
-formIngredient.addEventListener("submit", (e) => {
+formIngredient.addEventListener("input", (e) => {
   e.preventDefault();
-  filterWords(stateRecipes.recipesFilter, "ingredient", e.target[0].value);
+  filterWords(stateRecipes.recipesFilter, "ingredient", e.target.value);
 });
 
 for (const border of deleteBorder) {

@@ -1,17 +1,19 @@
+// @ts-nocheck
 const searchMainBar = (array) => {
   const name = filterName(array, stateRecipes.searchBar);
   const description = filterDescription(array, stateRecipes.searchBar);
   const ingredient = filterIngredients(array, stateRecipes.searchBar);
-  const allArray = [...name, ...ingredient, ...description];
-  const filter = [];
 
-  for (const arr of allArray) {
-    if (!filter.includes(arr)) {
-      filter.push(arr);
-    }
+  const nameSet = new Set(name);
+  for (const item of description) {
+    nameSet.add(item);
+  }
+  for (const item of ingredient) {
+    nameSet.add(item);
   }
 
-  return filter;
+  const uniqueElements = Array.from(nameSet);
+  return uniqueElements;
 };
 
 // Permet de faire la recherche sur la search bar principal
